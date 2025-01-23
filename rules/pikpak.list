@@ -1,0 +1,24 @@
+# NAME: pikpak
+# AUTHOR: Sereinfy
+# REPO: https://github.com/Sereinfy/clash
+# UPDATED: 2024-01-08 16:02:53
+DOMAIN,mypikpak.com
+DOMAIN,mypikpak.net
+DOMAIN,user.mypikpak.com
+DOMAIN,access.pikpak.me
+DOMAIN,access.pikpakdrive.com
+DOMAIN,access.mypikpak.com
+DOMAIN,access.mypikpak.net
+DOMAIN-SUFFIX,config.mypikpak.com
+DOMAIN-SUFFIX,rcv5-sp.mypikpak.com
+DOMAIN-SUFFIX,hub5u.mypikpak.com
+DOMAIN-SUFFIX,res-etl-ssl.mypikpak.com
+DOMAIN-SUFFIX,hub5pnc.mypikpak.com
+DOMAIN-SUFFIX,dlandroid.rcv.sandai.net
+DOMAIN-SUFFIX,hub5idx.v6.shub.sandai.net
+DOMAIN-SUFFIX,hub5pn.wap.sandai.net
+DOMAIN-SUFFIX,hub5pnc.sandai.net
+DOMAIN-SUFFIX,hub5pr.v6.phub.sandai.net
+DOMAIN-SUFFIX,hubciddata.sandai.net
+# DOMAIN,api-drive.mypikpak.com Pikpak下载
+# DOMAIN-KEYWORD,mypikpak #Pikpak下载
