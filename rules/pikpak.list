@@ -21,5 +21,6 @@ DOMAIN-SUFFIX,hub5pn.wap.sandai.net
 DOMAIN-SUFFIX,hub5pnc.sandai.net
 DOMAIN-SUFFIX,hub5pr.v6.phub.sandai.net
 DOMAIN-SUFFIX,hubciddata.sandai.net
-# DOMAIN,api-drive.mypikpak.com Pikpak下载
-# DOMAIN-KEYWORD,mypikpak #Pikpak下载
+# pikpak下载
+DOMAIN,api-drive.mypikpak.com
+DOMAIN-KEYWORD,mypikpak
