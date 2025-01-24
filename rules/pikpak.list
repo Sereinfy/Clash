@@ -25,3 +25,4 @@ DOMAIN-SUFFIX,hubciddata.sandai.net
 # pikpak下载
 DOMAIN,api-drive.mypikpak.com
 DOMAIN-KEYWORD,mypikpak
+IP-CIDR,101.47.0.0/16,no-resolve
