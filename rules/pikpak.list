@@ -12,6 +12,7 @@ DOMAIN,access.mypikpak.net
 DOMAIN-SUFFIX,config.mypikpak.com
 DOMAIN-SUFFIX,static.mypikpak.com
 DOMAIN-SUFFIX,rcv5-sp.mypikpak.com
+DOMAIN-SUFFIX,rcv5-gcm-sp.mypikpak.com
 DOMAIN-SUFFIX,hub5u.mypikpak.com
 DOMAIN-SUFFIX,res-etl-ssl.mypikpak.com
 DOMAIN-SUFFIX,hub5pnc.mypikpak.com
