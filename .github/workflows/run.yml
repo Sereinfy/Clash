@@ -1,0 +1,90 @@
+name: Download
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  download_icons:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Download icons to temporary folder
+        run: |
+          urls=(
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram_X.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bot.png"
+            "https://raw.githubusercontent.com/Sereinfy/clash/main/icons/YouTube2.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Azure.png"
+            "https://raw.githubusercontent.com/Sereinfy/clash/main/icons/Pikpakre.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png"
+            "https://raw.githubusercontent.com/Sereinfy/clash/main/icons/Netherlands.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/European_Union.png"
+          )
+          
+          for url in "${urls[@]}"; do
+            curl -o "/tmp/icons/$(basename $url)" $url
+          done
+
+      - name: Move icons to 'icons' folder
+        run: |
+          mv /tmp/icons/* icons/
+
+      - name: Download rules to temporary folder
+        run: |
+          urls2=(
+            "https://ruleset.skk.moe/Clash/non_ip/domestic.txt"
+            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/applications.yaml"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker.yaml"
+            "https://raw.githubusercontent.com/Sereinfy/clash/refs/heads/main/rules/pikpak.list"
+            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/fakeip-filter.mrs"
+            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/google.mrs"
+            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/google-cn.mrs"
+            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/github.mrs"
+            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/twitter.mrs"
+            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/youtube.mrs"
+            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/ai.mrs"
+            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/proxy.mrs"
+            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/appleProxy.mrs"
+            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/ads.mrs"
+            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/cn.mrs"
+            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/cnip.mrs"
+            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/cloudflareip.mrs"
+            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/telegramip.mrs"
+          )
+          
+          for url in "${urls2[@]}"; do
+            curl -o "/tmp/rules/$(basename $url)" $url
+          done
+
+      - name: Move rules to 'rules' folder
+        run: |
+          mv /tmp/rules/* rules/
+          
+      - name: Apply
+        run: |
+          Emoji=("🎉" "🤞" "✨" "🎁" "🎈" "🎄" "🎨" "🍓" "🍕" "🍉" "💐" "🌴" "🚀" "🛸" "🗽" "⛅" "🌈" "🔥" "⛄" "🐶" "🏅" "🦄" "🐤")
+          git add .
+          git commit -m "${Emoji[$[$RANDOM % ${#Emoji[@]}]]} Sync $(date +%Y-%m-%d" "%H:%M:%S)"
+          git push -f -u origin main
