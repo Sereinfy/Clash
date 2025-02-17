@@ -5,7 +5,8 @@ on:
     branches:
       - main
   workflow_dispatch:
-
+  schedule:
+    - cron: 0 4 * * * 
 jobs:
   download_icons:
     runs-on: ubuntu-latest
@@ -14,6 +15,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         
+      - name: Create temporary folder for icons
+        run: mkdir -p /tmp/icons
+
       - name: Download icons to temporary folder
         run: |
           urls=(
@@ -50,6 +54,9 @@ jobs:
         run: |
           mv /tmp/icons/* icons/
 
+      - name: Create temporary folder for rules
+        run: mkdir -p /tmp/rules
+
       - name: Download rules to temporary folder
         run: |
           urls2=(
@@ -81,8 +88,8 @@ jobs:
       - name: Move rules to 'rules' folder
         run: |
           mv /tmp/rules/* rules/
-          
-      - name: Apply
+
+      - name: Apply changes and commit
         run: |
           Emoji=("🎉" "🤞" "✨" "🎁" "🎈" "🎄" "🎨" "🍓" "🍕" "🍉" "💐" "🌴" "🚀" "🛸" "🗽" "⛅" "🌈" "🔥" "⛄" "🐶" "🏅" "🦄" "🐤")
           git add .
