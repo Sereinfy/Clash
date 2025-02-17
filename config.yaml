@@ -81,6 +81,7 @@ listeners:
     
 proxies:
 
+
 # 锚点引用
 rule-anchor:
   # 自动测速
@@ -96,7 +97,7 @@ rule-anchor:
   selectvps: &selectvps {type: select, <<: *testUrl, use: [MyVps], include-all-proxies: true, proxies: [机场选择,DIRECT]}
   # 机场选择
   selectCity: &selectCity {type: select, <<: *testUrl, include-all-providers: true, proxies: [香港自动,台湾自动,日本自动,新加坡自动,美国自动,欧盟自动]}
-  selectAll: &selectAll {type: select, include-all-providers: true, proxies: [手动选择,香港自动,台湾自动,日本自动,新加坡自动,美国自动,欧盟自动,DIRECT]}
+  selectAll: &selectAll {type: select, include-all-providers: true, proxies: [手动选择,香港自动,台湾自动,日本自动,新加坡自动,美国自动,欧盟自动,DIRECT,PASS]}
   # 节点过滤
   Exclude: &Exclude {exclude-filter: 奈飞|推荐|过期|剩余|到期|官网|失联|回国|群|长期|重置|余额|充值|氪金|套餐|限制}
   # 地区过滤
@@ -174,11 +175,17 @@ rules:
   - RULE-SET,ChinaIP,国内直连
   - GEOIP,Cloudflare,CloudflareIP
   - GEOIP,Telegram,Telegram
+  - RULE-SET,telegram_SG,新加坡自动
+  - RULE-SET,telegram_US,美国自动
+  - RULE-SET,telegram_EU,欧盟自动
   - MATCH,漏网之鱼
 
 rule-providers: 
   domestic_non_ip: {<<: *classic, format: text, url: https://ruleset.skk.moe/Clash/non_ip/domestic.txt}
   applications: {<<: *classic, url: https://ghfast.top/https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/applications.yaml}
+  telegram_SG: {<<: *classic, url: https://raw.githubusercontent.com/Sereinfy/clash/main/rules/telegram-SG.yaml}
+  telegram_US: {<<: *classic, url: https://raw.githubusercontent.com/Sereinfy/clash/main/rules/telegram-US.yaml}
+  telegram_EU: {<<: *classic, url: https://raw.githubusercontent.com/Sereinfy/clash/main/rules/telegram-EU.yaml}
   LAN: {<<: *classic, url: https://ghfast.top/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml}
   Tracker: {<<: *classic, url: https://ghfast.top/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker.yaml}
   pikpak: {<<: *classic, format: text, url: https://ghfast.top/https://raw.githubusercontent.com/Sereinfy/clash/refs/heads/main/rules/pikpak.list}
@@ -194,3 +201,4 @@ rule-providers:
   Adblock: {<<: *domain, url: https://ghfast.top/https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/ads.mrs}
   China: {<<: *domain, url: https://ghfast.top/https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/cn.mrs}
   ChinaIP: {<<: *ip, url: https://ghfast.top/https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/cnip.mrs}
+  
