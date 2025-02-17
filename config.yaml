@@ -116,7 +116,7 @@ proxy-providers:
   name:
     <<: [*Check,*Exclude]
 #    filter: 香港|新加坡
-    url: "https://bujidao.cc/sub?key=kdzvR3zKR05oVO7yT55y8IsSngwJyOoC"
+    url: ""
     override:
       additional-prefix: "[]"
 
