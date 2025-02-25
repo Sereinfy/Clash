@@ -41,6 +41,7 @@ jobs:
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/European_Union.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Nfcloud.png"
           )
           
           for url in "${urls[@]}"; do
