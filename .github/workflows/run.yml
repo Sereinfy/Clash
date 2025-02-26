@@ -60,7 +60,7 @@ jobs:
           urls2=(
             "https://ruleset.skk.moe/Clash/non_ip/domestic.txt"
             "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/applications.yaml"
-            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan_No_Resolve.yaml"
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker_No_Resolve.yaml"
             "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/fakeip-filter.mrs"
             "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/google.mrs"
