@@ -84,6 +84,8 @@ jobs:
 
       - name: Move rules to 'rules' folder
         run: |
+          curl -o /tmp/rules/non_ip_cdn.txt https://ruleset.skk.moe/Clash/non_ip/cdn.txt
+          curl -o /tmp/rules/domainset_cdn.txt https://ruleset.skk.moe/Clash/domainset/cdn.txt
           mv /tmp/rules/* rules/
 
       - name: Commit and push changes
