@@ -1,7 +1,7 @@
 #########################################
 # Sukka's Ruleset - CDN Domains
-# Last Updated: 2025-03-01T17:23:38.681Z
-# Size: 3198
+# Last Updated: 2025-03-03T03:51:58.826Z
+# Size: 3205
 # License: AGPL 3.0
 # Homepage: https://ruleset.skk.moe
 # GitHub: https://github.com/SukkaW/Surge
@@ -704,6 +704,7 @@ cdn.quickemailverification.com
 +.akamai-content-network.com
 +.ravencoinipfs-gateway.com
 cdn.minecraft-server-list.com
++.dynamic-static-assets.com
 +.1passwordusercontent.com
 +.sciencedirectassets.com
 loader.mantis-intelligence.com
@@ -1200,6 +1201,7 @@ resources.help.salesforce.com
 wp.salesforce.com
 cdn.safecharge.com
 +.ipfs.runfission.com
+cdn.promotekit.com
 apps.profitihub.com
 media.printables.com
 +.placewaifu.com
@@ -1213,9 +1215,11 @@ images4.cmp.optimizely.com
 images3.cmp.optimizely.com
 images2.cmp.optimizely.com
 images1.cmp.optimizely.com
+static-www.onlyoffice.com
 +.nincontent.com
 +.netdna-ssl.com
 cdn.nerdschalk.com
+cdn.app.neononepay.com
 media.nationwide.com
 tags.nationwide.com
 +.myshopapps.com
@@ -1451,6 +1455,7 @@ wcpstatic.microsoft.com
 filestore.community.support.microsoft.com
 images.ecomm.microsoft.com
 ajax.microsoft.com
+uhf.microsoft.com
 js.memberful.com
 static.mediafire.com
 cdn-images.mailchimp.com
@@ -1895,6 +1900,7 @@ iframe.nbcnews.com
 stubdownloader.services.mozilla.com
 firefox.settings.services.mozilla.com
 +.push.services.mozilla.com
+cdn.sso.mozilla.com
 static.moonpay.com
 static.moegoat.com
 images.moegoat.com
@@ -2064,6 +2070,7 @@ static.zaobao.com
 rapid-cdn.yottaa.com
 cdn.xvidzz.com
 img.xhacgn.com
+website-prod.cache.wpscdn.com
 frontend-apps.workos.com
 cdn.workos.com
 embed-ssl.wistia.com
