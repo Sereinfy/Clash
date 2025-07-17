@@ -89,7 +89,7 @@ jobs:
           
           curl -o /tmp/rules/china_ip.txt https://ruleset.skk.moe/Clash/ip/china_ip.txt
           curl -o /tmp/rules/China_ip_ipv6.txt https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt
-          cat china_ip_ipv6.txt >> china_ip.txt
+          cat /tmp/rules/china_ip_ipv6.txt >> /tmp/rules/china_ip.txt
           mv /tmp/rules/china_ip.txt rules/
           
       - name: Commit and push changes
