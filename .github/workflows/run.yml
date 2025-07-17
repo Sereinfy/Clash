@@ -88,8 +88,8 @@ jobs:
           mv /tmp/rules/* rules/
           
           curl -o /tmp/rules/china_ip.txt https://ruleset.skk.moe/Clash/ip/china_ip.txt
-          curl -o /tmp/rules/China_ip_ipv6.txt https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt
-          cat /tmp/rules/china_ip_ipv6.txt >> /tmp/rules/china_ip.txt
+          curl -o /tmp/rules/china_ip_ipv6.txt https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt
+          grep -v -e '^#' -e '^$' /tmp/rules/china_ip_ipv6.txt >> /tmp/rules/china_ip.txt
           mv /tmp/rules/china_ip.txt rules/
           
       - name: Commit and push changes
