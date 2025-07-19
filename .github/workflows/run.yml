@@ -55,47 +55,14 @@ jobs:
       - name: Create temporary folder for rules
         run: mkdir -p /tmp/rules
 
-      - name: download nsfw
+      - name: Download rules
         run: |
-          curl -s https://nsfw.oisd.nl | sed 's/||\(.*\)\^/\1/g' > /tmp/rules/oisd_nsfw_small.txt
-        
-      - name: Download rules to temporary folder
-        run: |
-          urls2=(
-            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/applications.yaml"
-            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan_No_Resolve.yaml"
-            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker_No_Resolve.yaml"
-            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/fakeip-filter.yaml"
-            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/google.yaml"
-            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/google-cn.yaml"
-            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/github.yaml"
-            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/twitter.yaml"
-            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/youtube.yaml"
-            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/ai.yaml"
-            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/proxy.yaml"
-            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/appleProxy.yaml"
-            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/ads.yaml"
-            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/cn.yaml"
-            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/cnip.yaml"
-            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/cloudflareip.yaml"
-            "https://raw.githubusercontent.com/Sereinfy/ruleset_geodata/clash-ruleset/telegramip.yaml"
-          )
+          rm -f /tmp/rules/*
+          curl -s "https://nsfw-small.oisd.nl" | sed -e '/^[![]/d' -e 's/||\(.*\)\^/  - '\''+\1'\''/g' | sed '1i payload:' > /tmp/rules/oisd_nsfw_small.txt
+          curl -sS https://ruleset.skk.moe/Clash/ip/china_ip.txt -o /tmp/rules/china_ip.txt && \
+          curl -sS https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt | grep -v -e '^#' -e '^$' >> /tmp/rules/china_ip.txt
           
-          for url in "${urls2[@]}"; do
-            curl -o "/tmp/rules/$(basename $url)" $url
-          done
-
-      - name: Move rules to 'rules' folder
-        run: |
-          curl -o /tmp/rules/non_ip_cdn.txt https://ruleset.skk.moe/Clash/non_ip/cdn.txt
-          curl -o /tmp/rules/domainset_cdn.txt https://ruleset.skk.moe/Clash/domainset/cdn.txt
           mv /tmp/rules/* rules/
-          
-          curl -o /tmp/rules/china_ip.txt https://ruleset.skk.moe/Clash/ip/china_ip.txt
-          curl -o /tmp/rules/china_ip_ipv6.txt https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt
-          grep -v -e '^#' -e '^$' /tmp/rules/china_ip_ipv6.txt >> /tmp/rules/china_ip.txt
-          mv /tmp/rules/china_ip.txt rules/
-          
       - name: Commit and push changes
         run: |
           git config --local user.name "github-actions[bot]"
