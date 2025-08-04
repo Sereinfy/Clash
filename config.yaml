@@ -185,8 +185,9 @@ rules:
   - RULE-SET,Cdn_non_ip,Static CDN
   - RULE-SET,Telegram,Telegram,no-resolve
   - RULE-SET,Global,Globally
-  ### 下面发起 DNS
+  
   - RULE-SET,Cloudflare,Cloudflare
+  ### 下面发起 DNS
   - RULE-SET,Cloudflare_ip,Cloudflare CDN
   - RULE-SET,CloudFront_ip,AWS CDN
   - RULE-SET,Akamai_ip,Akamai CDN
