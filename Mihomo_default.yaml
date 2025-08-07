@@ -1,11 +1,7 @@
   # 锚点引用
 rule-anchor:
-  # 测速地址
-  TestUrl: &TestUrl {url: "https://www.apple.com/library/test/success.html", expected-status: 200/302, timeout: 3000, interval: 100}
-  # 自动测速
-  AutoAll: &AutoAll {type: url-test, include-all: true, lazy: true, timeout: 3000, max-failed-times: 1, tolerance: 50, <<: *TestUrl}
   # 更新时间
-  Check: &Check {type: http, interval: 600, health-check: {enable: true, <<: *TestUrl}}
+  Check: &Check {type: http, interval: 600, health-check: {enable: true, url: "https://www.apple.com/library/test/success.html", expected-status: 200/302, timeout: 3000, interval: 100}}
   # 远程参数
   Classical: &classic {type: http, interval: 86400, behavior: classical}
   ipcidr: &ip {type: http, interval: 86400, behavior: ipcidr}
@@ -14,23 +10,23 @@ rule-anchor:
   Exclude: &Exclude {exclude-filter: 奈飞|推荐|过期|剩余|到期|官网|失联|回国|群|长期|重置|余额|充值|氪金|套餐|限制}
   Hy2: &Hy2 {exclude-type: hysteria2}
   # 地区过滤
-  filterHK: &filterHK {<<: *AutoAll, hidden: false, filter: "(?i)(?!直连)(香港|🇭🇰|hk|hongkong|hong kong|HKG)"}
-  filterTW: &filterTW {<<: *AutoAll, hidden: false, filter: "(?i)(?!直连)(台湾|🇼🇸|🇹🇼|TW|taiwan|TPE|TSA|KHH)"}
-  filterJP: &filterJP {<<: *AutoAll, hidden: false, filter: "(?i)(?!直连)(日本|东京|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK)"}
-  filterUS: &filterUS {<<: *AutoAll, hidden: false, filter: "(?i)(?!直连)(美国|🇺🇸|洛杉矶|圣何塞|纽约|凤凰城|us|unitedstates|united states)"}
-  filterSG: &filterSG {<<: *AutoAll, hidden: false, filter: "(?i)(?!直连)(新加坡|🇸🇬|sg|singapore)"}
-  filterNL: &filterNL {<<: *AutoAll, hidden: true, filter: "(?i)(?!直连)(荷兰|🇳🇱|nl|Netherlands)"}
-  filterLow: &filterLow {<<: *AutoAll, hidden: true, filter: "(?i)(?!直连)(0.[1-8])"}
-  filterJP_HK: &filterJP_HK {<<: *AutoAll, hidden: false, filter: "(?i)(?!直连)(日本|东京|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK|香港|🇭🇰|hk|hongkong|hong kong|HKG)"}
-  filterJP_HK_SG: &filterJP_HK_SG {<<: *AutoAll, hidden: false, filter: "(?i)(?!直连)(日本|东京|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK|香港|🇭🇰|hk|hongkong|hong kong|HKG|新加坡|🇸🇬|sg|singapore)"}
+  filterHK: &filterHK {type: url-test, include-all: true, lazy: true, timeout: 3000, max-failed-times: 1, tolerance: 50, hidden: false, filter: "(?i)(?!直连)(香港|🇭🇰|hk|hongkong|hong kong|HKG)"}
+  filterTW: &filterTW {type: url-test, include-all: true, lazy: true, timeout: 3000, max-failed-times: 1, tolerance: 50, hidden: false, filter: "(?i)(?!直连)(台湾|🇼🇸|🇹🇼|TW|taiwan|TPE|TSA|KHH)"}
+  filterJP: &filterJP {type: url-test, include-all: true, lazy: true, timeout: 3000, max-failed-times: 1, tolerance: 50, hidden: false, filter: "(?i)(?!直连)(日本|东京|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK)"}
+  filterUS: &filterUS {type: url-test, include-all: true, lazy: true, timeout: 3000, max-failed-times: 1, tolerance: 50, hidden: false, filter: "(?i)(?!直连)(美国|🇺🇸|洛杉矶|圣何塞|纽约|凤凰城|us|unitedstates|united states)"}
+  filterSG: &filterSG {type: url-test, include-all: true, lazy: true, timeout: 3000, max-failed-times: 1, tolerance: 50, hidden: false, filter: "(?i)(?!直连)(新加坡|🇸🇬|sg|singapore)"}
+  filterNL: &filterNL {type: url-test, include-all: true, lazy: true, timeout: 3000, max-failed-times: 1, tolerance: 50, hidden: true, filter: "(?i)(?!直连)(荷兰|🇳🇱|nl|Netherlands)"}
+  filterLow: &filterLow {type: url-test, include-all: true, lazy: true, timeout: 3000, max-failed-times: 1, tolerance: 50, hidden: true, filter: "(?i)(?!直连)(0.[1-8])"}
+  filterJP_HK: &filterJP_HK {type: url-test, include-all: true, lazy: true, timeout: 3000, max-failed-times: 1, tolerance: 50, hidden: false, filter: "(?i)(?!直连)(日本|东京|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK|香港|🇭🇰|hk|hongkong|hong kong|HKG)"}
+  filterJP_HK_SG: &filterJP_HK_SG {type: url-test, include-all: true, lazy: true, timeout: 3000, max-failed-times: 1, tolerance: 50, hidden: false, filter: "(?i)(?!直连)(日本|东京|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK|香港|🇭🇰|hk|hongkong|hong kong|HKG|新加坡|🇸🇬|sg|singapore)"}
   # 分组
-  Group_vps: &Group_vps {type: select, <<: *TestUrl, use: [Build], include-all-proxies: true, proxies: [DIRECT,Airport]}
-  Group_Github: &Group_Github {type: select, <<: *TestUrl, use: [Build], include-all-proxies: true, proxies: [国际互联,AutoUS,DIRECT]}
+  Group_vps: &Group_vps {type: select, url: "https://www.apple.com/library/test/success.html", expected-status: 200/302, timeout: 3000, interval: 100, use: [Build], include-all-proxies: true, proxies: [DIRECT,Airport]}
+  Group_Github: &Group_Github {type: select, url: "https://www.apple.com/library/test/success.html", expected-status: 200/302, timeout: 3000, interval: 100, use: [Build], include-all-proxies: true, proxies: [国际互联,AutoUS,DIRECT]}
   
-  Group_City: &Group_City {type: select, <<: *TestUrl, include-all-providers: true, proxies: [AutoHK,AutoTW,AutoJP,AutoSG,AutoUS]}
-  Group_All: &Group_All {type: select, <<: *TestUrl, proxies: [国际互联,AutoHK,AutoTW,AutoJP,AutoSG,AutoUS,AutoLow,DIRECT]}
-  Group_CDN: &Group_CDN {type: select, <<: *TestUrl, proxies: [DIRECT,国际互联,AutoHK,AutoTW,AutoJP,AutoSG,AutoUS,AutoLow]}
-  TG_EU_PASS: &TG_EU_PASS {type: select, <<: *TestUrl, proxies: [国际互联,Airport,AutoNL,AutoUS]}
+  Group_City: &Group_City {type: select, url: "https://www.apple.com/library/test/success.html", expected-status: 200/302, timeout: 3000, interval: 100, include-all-providers: true, proxies: [AutoHK,AutoTW,AutoJP,AutoSG,AutoUS]}
+  Group_All: &Group_All {type: select, url: "https://www.apple.com/library/test/success.html", expected-status: 200/302, timeout: 3000, interval: 100, proxies: [国际互联,AutoHK,AutoTW,AutoJP,AutoSG,AutoUS,AutoLow,DIRECT]}
+  Group_CDN: &Group_CDN {type: select, url: "https://www.apple.com/library/test/success.html", expected-status: 200/302, timeout: 3000, interval: 100, proxies: [DIRECT,国际互联,AutoHK,AutoTW,AutoJP,AutoSG,AutoUS,AutoLow]}
+  TG_EU_PASS: &TG_EU_PASS {type: select, url: "https://www.apple.com/library/test/success.html", expected-status: 200/302, timeout: 3000, interval: 100, proxies: [国际互联,Airport,AutoNL,AutoUS]}
   # 特殊
   Group_Static: &Group_Static {type: smart, policy-priority: "日本:1.1", uselightgbm: true, collectdata: false, include-all-providers: true, <<: *filterJP_HK}
   Group_Mickey: &Group_Mickey {type: smart, policy-priority: "香港:1.0", uselightgbm: true, collectdata: false, include-all-providers: true, <<: *filterJP_HK_SG}
@@ -68,7 +64,7 @@ proxy-groups:
   - {name: AutoTW, <<: *filterTW, icon: https://g.blfrp.cn/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
   - {name: AutoJP, <<: *filterJP, icon: https://g.blfrp.cn/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
   - {name: AutoUS, <<: *filterUS, icon: https://g.blfrp.cn/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
-  - {name: AutoSG, <<: *filterSG, tolerance: 10, icon: https://g.blfrp.cn/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
+  - {name: AutoSG, <<: *filterSG, icon: https://g.blfrp.cn/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
   - {name: AutoNL, <<: *filterNL, icon: https://flagcdn.com/w160/nl.png}
   - {name: AutoLow, <<: *filterLow, icon: https://g.blfrp.cn/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png}
 rules:
@@ -136,15 +132,15 @@ sub-rules:
     
 rule-providers: # https://clash.wiki/premium/rule-providers.html
 
-  China: {<<: *classic, url: https://g.blfrp.cn/https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Domestic.yaml}
-  China_ip: {<<: *ip, format: text, url: https://g.blfrp.cn/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/china_ip.txt}
+  China: {<<: *classic， url: https://g.blfrp.cn/https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Domestic.yaml}
+  China_ip: {<<: *ip， format: text， url: https://g.blfrp.cn/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/china_ip.txt}
   Apple: {<<: *classic, url: https://g.blfrp.cn/https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Apple.yaml}
-  Apple_cn: {<<: *classic, format: text, url: https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt}
-  Apple_cdn: {<<: *domain, url: https://g.blfrp.cn/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt}
-  Microsoft: {<<: *classic, url: https://g.blfrp.cn/https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Microsoft.yaml}
-  LAN: {<<: *classic, url: https://g.blfrp.cn/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan_No_Resolve.yaml}
+  Apple_cn: {<<: *classic， format: text， url: https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt}
+  Apple_cdn: {<<: *domain， url: https://g.blfrp.cn/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt}
+  Microsoft: {<<: *classic， url: https://g.blfrp.cn/https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Microsoft.yaml}
+  LAN: {<<: *classic， url: https://g.blfrp.cn/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan_No_Resolve.yaml}
   
-  Google_cn: {<<: *domain, url: https://g.blfrp.cn/https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/google-cn.yaml}
+  Google_cn: {<<: *domain， url: https://g.blfrp.cn/https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/google-cn.yaml}
   
   Applications: {<<: *classic, url: https://g.blfrp.cn/https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/applications.yaml}
 
