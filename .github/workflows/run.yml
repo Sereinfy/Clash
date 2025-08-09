@@ -64,12 +64,26 @@ jobs:
           curl -sS https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt | grep -v -e '^#' -e '^$' >> /tmp/rules/china_ip.txt
           
           mv /tmp/rules/* rules/
+
+      - name: Download and unzip `mihomo` core
+        run: |
+          wget https://github.com/DustinWin/proxy-tools/releases/download/mihomo/mihomo-meta-linux-amd64.tar.gz -O - | tar -zxf - -C ./tools/
+          mv -f ./tools/CrashCore ./tools/mihomo
+
+      - name: Generate `mihomo` rule-set (mrs)
+        run: |
+          cd ./tools/
+          chmod +x ./mihomo
+          ./mihomo convert-ruleset ipcidr text rules/china_ip.txt rules/china_ip.mrs
+
+          
       - name: Commit and push changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if [ -n "$(git status --porcelain)" ]; then
-            git add .
+            git add rules/
+            git add icons/
             git commit -m "Automatic update"
             git push
           else
