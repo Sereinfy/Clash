@@ -74,7 +74,7 @@ jobs:
       - name: Generate `mihomo` rule-set (mrs)
         run: |
           chmod +x ./tools/mihomo
-          ./tools/mihomo convert-ruleset ipcidr text rules/china_ip.txt rules/china_ip.mrs
+          ./tools/mihomo convert-ruleset domain yaml rules/oisd_nsfw_small.yaml rules/oisd_nsfw_small.mrs
 
 
           
