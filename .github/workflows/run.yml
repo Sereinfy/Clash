@@ -73,9 +73,9 @@ jobs:
 
       - name: Generate `mihomo` rule-set (mrs)
         run: |
-          cd ./tools/
-          chmod +x ./mihomo
-          ./mihomo convert-ruleset ipcidr text rules/china_ip.txt rules/china_ip.mrs
+          chmod +x ./tools/mihomo
+          ./tools/mihomo convert-ruleset ipcidr text rules/china_ip.txt rules/china_ip.mrs
+
 
           
       - name: Commit and push changes
