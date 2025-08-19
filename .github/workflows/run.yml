@@ -62,6 +62,9 @@ jobs:
           curl -sSL "https://nsfw-small.oisd.nl" | sed -e '/^[![]/d' -e '/^$/d' -e 's/||\(.*\)\^/  - '\''+.\1'\''/g' | sed '1i payload:' > /tmp/rules/oisd_nsfw_small.yaml
           curl -sSL https://ruleset.skk.moe/Clash/ip/china_ip.txt -o /tmp/rules/china_ip.txt && \
           curl -sSL https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt | grep -v -e '^#' -e '^$' >> /tmp/rules/china_ip.txt
+          curl -sSL https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list -o /tmp/rules/pcdn.txt
+          curl -sSL https://raw.githubusercontent.com/sbwml/luci-app-mosdns/v5/luci-app-mosdns/root/etc/mosdns/rule/cloudflare-cidr.txt -o /tmp/rules/cloudflare-cidr.txt
+          curl -sSL https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list -o /tmp/rules/fake_ip_filter.txt
           
           mv /tmp/rules/* rules/
 
