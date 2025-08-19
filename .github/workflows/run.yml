@@ -65,6 +65,7 @@ jobs:
           curl -sSL https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list -o /tmp/rules/pcdn.txt
           curl -sSL https://raw.githubusercontent.com/sbwml/luci-app-mosdns/v5/luci-app-mosdns/root/etc/mosdns/rule/cloudflare-cidr.txt -o /tmp/rules/cloudflare-cidr.txt
           curl -sSL https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list -o /tmp/rules/fake_ip_filter.txt
+          curl -sSL https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Domain.yaml -o /tmp/rules/Global_Domain.yaml
           
           mv /tmp/rules/* rules/
 
@@ -78,7 +79,7 @@ jobs:
         run: |
           chmod +x ./tools/mihomo
           ./tools/mihomo convert-ruleset domain yaml rules/oisd_nsfw_small.yaml rules/oisd_nsfw_small.mrs
-
+          ./tools/mihomo convert-ruleset domain yaml rules/Global_Domain.yaml rules/Global_Domain.mrs
 
           
       - name: Commit and push changes
