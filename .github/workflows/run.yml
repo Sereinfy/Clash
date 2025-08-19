@@ -59,9 +59,9 @@ jobs:
         run: |
           rm -f rules/*.txt
           rm -f rules/*.yaml
-          curl -s "https://nsfw-small.oisd.nl" | sed -e '/^[![]/d' -e '/^$/d' -e 's/||\(.*\)\^/  - '\''+.\1'\''/g' | sed '1i payload:' > /tmp/rules/oisd_nsfw_small.yaml
-          curl -sS https://ruleset.skk.moe/Clash/ip/china_ip.txt -o /tmp/rules/china_ip.txt && \
-          curl -sS https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt | grep -v -e '^#' -e '^$' >> /tmp/rules/china_ip.txt
+          curl -sSL "https://nsfw-small.oisd.nl" | sed -e '/^[![]/d' -e '/^$/d' -e 's/||\(.*\)\^/  - '\''+.\1'\''/g' | sed '1i payload:' > /tmp/rules/oisd_nsfw_small.yaml
+          curl -sSL https://ruleset.skk.moe/Clash/ip/china_ip.txt -o /tmp/rules/china_ip.txt && \
+          curl -sSL https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt | grep -v -e '^#' -e '^$' >> /tmp/rules/china_ip.txt
           
           mv /tmp/rules/* rules/
 
