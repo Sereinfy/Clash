@@ -15,50 +15,49 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         
-      - name: Create temporary folder for icons
-        run: mkdir -p /tmp/icons
+      - name: Create folders
+        run: |
+          mkdir -p icons
+          mkdir -p rules
 
       - name: Download icons to temporary folder
+        run: |
+      - name: Download icons
         run: |
           urls=(
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png"
-            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png"
-            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram_X.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png"
-            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bot.png"
-            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png"
-            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png"
-            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png"
-            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Azure.png"
+            "https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/anthropic.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png"
+            "https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/softlyx/PikPak.png"
+            "https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/meta.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Mickey.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png"
-            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/CN.png"
+            "https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/apple.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png"
-            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png"
-            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/European_Union.png"
-            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Nfcloud.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/DomesticMedia.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png"
           )
-          
           for url in "${urls[@]}"; do
-            curl -o "/tmp/icons/$(basename $url)" $url
+            filename=$(basename "$url")
+            echo "Downloading $url -> icons/$filename"
+            curl -L "$url" -o "icons/$filename" || echo "Failed: $url"
           done
-
-      - name: Move icons to 'icons' folder
-        run: |
-          mv /tmp/icons/* icons/
-
-      - name: Create temporary folder for rules
-        run: mkdir -p /tmp/rules
 
       - name: Download rules
         run: |
-          rm -f rules/*.txt
-          rm -f rules/*.yaml
           curl -sSL "https://nsfw-small.oisd.nl" | sed -e '/^[![]/d' -e '/^$/d' -e 's/||\(.*\)\^/  - '\''+.\1'\''/g' | sed '1i payload:' > /tmp/rules/oisd_nsfw_small.yaml
           curl -sSL https://ruleset.skk.moe/Clash/ip/china_ip.txt -o /tmp/rules/china_ip.txt && \
           curl -sSL https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt | grep -v -e '^#' -e '^$' >> /tmp/rules/china_ip.txt
@@ -66,9 +65,53 @@ jobs:
           curl -sSL https://raw.githubusercontent.com/sbwml/luci-app-mosdns/v5/luci-app-mosdns/root/etc/mosdns/rule/cloudflare-cidr.txt -o /tmp/rules/cloudflare-cidr.txt
           curl -sSL https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list -o /tmp/rules/fake_ip_filter.txt
           curl -sSL https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Domain.yaml -o /tmp/rules/Global_Domain.yaml
-          
-          mv /tmp/rules/* rules/
 
+      - name: Download rules (new URLs via for loop)
+        run: |
+          urls=(
+            #LM-Firefly classical
+            "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Domestic.yaml"
+            "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Apple.yaml"
+            "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Microsoft.yaml"
+            "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/PROXY/Facebook.yaml"
+            "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/PROXY/Cloudflare.yaml"
+            "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Global-Services/YouTube.yaml"
+
+            # Loyalsoldier
+            "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt"
+            "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt"
+            "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt"
+            "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt"
+            "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
+            "https://raw.githubusercontent.com/Loyalsoldier/geoip/release/clash/ipcidr/fastly.txt"
+
+            # Sereinfy
+            "https://raw.githubusercontent.com/Sereinfy/ipranges/main/amazon/cloudfront_ips.txt"
+            "https://raw.githubusercontent.com/Sereinfy/ipranges/main/akamai/ipv4_merged.txt"
+            "https://raw.githubusercontent.com/Sereinfy/Adrules/main/rules/adblockmihomolite.yaml"
+
+            # blackmatrix7
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan_No_Resolve.yaml"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google_No_Resolve.yaml"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub_No_Resolve.yaml"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter_No_Resolve.yaml"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker_No_Resolve.yaml"
+
+            # Sukka / ruleset.skk.moe
+            "https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt"
+            "https://ruleset.skk.moe/Clash/non_ip/cdn.txt"
+            "https://ruleset.skk.moe/Clash/domainset/cdn.txt"
+
+            # DustinWin
+            "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/ai.mrs"
+          )
+
+          for url in "${urls[@]}"; do
+            filename=$(basename "$url")
+            echo "Downloading $url -> rules/$filename"
+            curl -L "$url" -o "rules/$filename" || echo "Failed: $url"
+          done
+          
       - name: Download and unzip `mihomo` core
         run: |
           mkdir -p tools
@@ -87,8 +130,8 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if [ -n "$(git status --porcelain)" ]; then
-            git add rules/
-            git add icons/
+            git add rules
+            git add icons
             git commit -m "Automatic update"
             git push
           else
