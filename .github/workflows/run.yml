@@ -20,8 +20,6 @@ jobs:
           mkdir -p icons
           mkdir -p rules
 
-      - name: Download icons to temporary folder
-        run: |
       - name: Download icons
         run: |
           urls=(
@@ -66,10 +64,11 @@ jobs:
           curl -sSL https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list -o rules/fake_ip_filter.txt
           curl -sSL https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Domain.yaml -o rules/Global_Domain.yaml
 
-      - name: Download rules (new URLs via for loop)
+      - name: Download rules (remote URLs)
         run: |
           urls=(
-            #LM-Firefly classical
+
+             #LM-Firefly classical
             "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Domestic.yaml"
             "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Apple.yaml"
             "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Microsoft.yaml"
@@ -88,7 +87,7 @@ jobs:
             # Sereinfy
             "https://raw.githubusercontent.com/Sereinfy/ipranges/main/amazon/cloudfront_ips.txt"
             "https://raw.githubusercontent.com/Sereinfy/ipranges/main/akamai/ipv4_merged.txt"
-            "https://raw.githubusercontent.com/Sereinfy/Adrules/mainrules/adblockmihomolite.yaml"
+            "https://raw.githubusercontent.com/Sereinfy/Adrules/main/rules/adblockmihomolite.yaml"
 
             # blackmatrix7
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan_No_Resolve.yaml"
@@ -98,12 +97,12 @@ jobs:
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker_No_Resolve.yaml"
 
             # Sukka / ruleset.skk.moe
-            "https:/ruleset.skk.moe/Clash/non_ip/apple_cn.txt"
-            "https:/ruleset.skk.moe/Clash/non_ip/cdn.txt"
-            "https:/ruleset.skk.moe/Clash/domainset/cdn.txt"
+            "https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt"
+            "https://ruleset.skk.moe/Clash/non_ip/cdn.txt"
+            "https://ruleset.skk.moe/Clash/domainset/cdn.txt"
 
             # DustinWin
-            "https://raw.githubusercontent.com/DustinWinruleset_geodata/mihomo-ruleset/ai.mrs"
+            "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/ai.mrs"
           )
 
           for url in "${urls[@]}"; do
