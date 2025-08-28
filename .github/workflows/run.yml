@@ -125,14 +125,15 @@ jobs:
       - name: Download and unzip `mihomo` core
         run: |
           mkdir -p tools
-          wget https://github.com/DustinWin/proxy-tools/releases/download/mihomo/mihomo-meta-linux-amd64.tar.gz -O - | tar -zxf - -C ./tools/
-          mv -f ./tools/CrashCore ./tools/mihomo
+          wget https://github.com/DustinWin/proxy-tools/releases/download/mihomo/mihomo-meta-linux-amd64.tar.gz -O - | tar -zxf - -C tools/
+          mv -f tools/CrashCore tools/mihomo
 
       - name: Generate `mihomo` rule-set (mrs)
         run: |
-          chmod +x ./tools/mihomo
-          ./tools/mihomo convert-ruleset domain yaml rules/oisd_nsfw_small.yaml rules/oisd_nsfw_small.mrs
-          ./tools/mihomo convert-ruleset domain yaml rules/Global_Domain.yaml rules/Global_Domain.mrs
+          chmod +x tools/mihomo
+          tools/mihomo convert-ruleset domain yaml rules/oisd_nsfw_small.yaml rules/oisd_nsfw_small.mrs
+          tools/mihomo convert-ruleset domain yaml rules/Global_Domain.yaml rules/Global_Domain.mrs
+          rm -rf tools/
 
           
       - name: Commit and push changes
