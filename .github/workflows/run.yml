@@ -86,8 +86,8 @@ jobs:
 
             # Sereinfy
             "https://raw.githubusercontent.com/Sereinfy/ipranges/main/amazon/cloudfront_ips.txt"
-            "https://raw.githubusercontent.com/Sereinfy/ipranges/main/akamai/ipv4_merged.txt"
-            "https://raw.githubusercontent.com/Sereinfy/Adrules/main/rules/adblockmihomolite.yaml"
+            "akamai_ips|https://raw.githubusercontent.com/Sereinfy/ipranges/main/akamai/ipv4_merged.txt"
+            "adblock_lite|https://raw.githubusercontent.com/Sereinfy/Adrules/main/rules/adblockmihomolite.yaml"
 
             # blackmatrix7
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan_No_Resolve.yaml"
@@ -98,19 +98,30 @@ jobs:
 
             # Sukka / ruleset.skk.moe
             "https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt"
-            "https://ruleset.skk.moe/Clash/non_ip/cdn.txt"
-            "https://ruleset.skk.moe/Clash/domainset/cdn.txt"
+            "cdn_non_ip|https://ruleset.skk.moe/Clash/non_ip/cdn.txt"
+            "cdn_domainset|https://ruleset.skk.moe/Clash/domainset/cdn.txt"
 
             # DustinWin
             "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/ai.mrs"
           )
 
-          for url in "${urls[@]}"; do
-            filename=$(basename "$url")
+          for item in "${urls[@]}"; do
+            if [[ "$item" == *"|"* ]]; then
+              # 有自定义名称
+              name="${item%%|*}"       # 拿 | 前面的作为文件名
+              url="${item#*|}"         # 拿 | 后面的作为 URL
+              ext="${url##*.}"         # 自动提取扩展名
+              filename="$name.$ext"
+            else
+              # 直接用 URL 的文件名
+              url="$item"
+              filename=$(basename "$url")
+            fi
+
             echo "Downloading $url -> rules/$filename"
-            curl -L "$url" -o "rules/$filename" || echo "Failed: $url"
+            curl -L -f -o "rules/$filename" "$url" || echo "Failed: $url"
           done
-          
+     
       - name: Download and unzip `mihomo` core
         run: |
           mkdir -p tools
