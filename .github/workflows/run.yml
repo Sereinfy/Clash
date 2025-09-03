@@ -125,7 +125,7 @@ jobs:
       - name: Download and unzip `mihomo` core
         run: |
           mkdir -p tools
-          wget https://github.com/DustinWin/proxy-tools/releases/download/mihomo/mihomo-meta-linux-amd64.tar.gz -O - | tar -zxf - -C tools/
+          curl -L https://github.com/DustinWin/proxy-tools/releases/download/mihomo/mihomo-meta-linux-amd64v3.tar.gz | tar -zx -C tools/
           mv -f tools/CrashCore tools/mihomo
 
       - name: Generate `mihomo` rule-set (mrs)
