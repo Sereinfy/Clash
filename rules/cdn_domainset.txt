@@ -1,7 +1,7 @@
 #########################################
 # Sukka's Ruleset - CDN Domains
-# Last Updated: 2025-09-02T17:05:23.250Z
-# Size: 3831
+# Last Updated: 2025-09-10T17:18:55.086Z
+# Size: 3871
 # License: AGPL 3.0
 # Homepage: https://ruleset.skk.moe
 # GitHub: https://github.com/SukkaW/Surge
@@ -56,6 +56,7 @@ cdn5.telegram.space
 cdn4.telegram.space
 cdn1.telegram.space
 +.pstorage.space
++.tutu1.space
 cdn.hiive.space
 cdn.deta.space
 +.ipfs.kavin.rocks
@@ -78,6 +79,7 @@ cdn.bullwhip.cloud
 resources-live.sketch.cloud
 +.gateway.pinata.cloud
 patterns.hiive.cloud
+cdn.craft.cloud
 cdn.tiny.cloud
 fscdn.eppo.cloud
 cdn-static.paw.cloud
@@ -145,12 +147,15 @@ cdn.kinopio.club
 storage.crisp.chat
 image.crisp.chat
 assets.toot.cafe
+img.apk.cafe
 avatars.micro.blog
 cdn.micro.blog
 i.111666.best
 i.loli.best
 image.nmb.best
 +.porn5.asia
+bucket.noy.asia
+img.noy.asia
 phishing.army
 cdn.joincommunity.xyz
 domain.expiring-soon.xyz
@@ -516,6 +521,7 @@ edgeassetservice.azureedge.net
 xpaywalletcdn.azureedge.net
 claritystatic.azureedge.net
 mobilecenter.azureedge.net
+trekcdnprod.azureedge.net
 typescript.azureedge.net
 edgestatic.azureedge.net
 ni-assets.azureedge.net
@@ -579,6 +585,7 @@ eaassets-a.akamaihd.net
 spoprod-a.akamaihd.net
 lumiere-a.akamaihd.net
 img.adspower.net
+cdn.yamibuy.net
 cdn.writeas.net
 unlimited-cdn.waifu2x.net
 social-cdn.vivaldi.net
@@ -728,6 +735,7 @@ todoist.b-cdn.net
 divhunt.b-cdn.net
 dh-site.b-cdn.net
 cdntube.b-cdn.net
+c-bin.b-cdn.net
 amp.azure.net
 s3.arkjp.net
 +.img3.acsta.net
@@ -767,7 +775,6 @@ touchgal-image.moyu.moe
 ovo.wxw.moe
 hv-monsterdb-data.skk.moe
 latency-test.skk.moe
-+.ruleset.skk.moe
 pic.skk.moe
 latency-test.lab.skk.moe
 img.skk.moe
@@ -976,6 +983,8 @@ code.ionicframework.com
 icons.internetbrands.com
 +.intercomassets.com
 img.huffingtonpost.com
+images2.giant-bicycles.com
+static.giant-bicycles.com
 cdn.gethypervisual.com
 static-gcp.freepikcompany.com
 cdn-live.foreignaffairs.com
@@ -1026,6 +1035,8 @@ asset.mansionglobal.com
 +.livemediahost.com
 pbs-prod.linustechtips.com
 cwsimages.ingramcontent.com
+media-central.indianexpress.com
+images.indianexpress.com
 +.highwinds-cdn.com
 cdn.heapanalytics.com
 sig.grumpybumpers.com
@@ -1093,6 +1104,7 @@ media.steampowered.com
 cdn.staticdelivr.com
 +.ipfs.soul-network.com
 image.shutterstock.com
+sourcemap.webfe.shopeemobile.com
 static.serverhunter.com
 +.scribdassets.com
 ak.sail-horizon.com
@@ -1232,7 +1244,9 @@ assets.squarespace.com
 +.splunkcloud.com
 assets.speedvitals.com
 +.skypeassets.com
++.shoplineimg.com
 img.shoplineapp.com
+cdn.shoplineapp.com
 cdn.servicebell.com
 files.scamadviser.com
 assets.salesmartly.com
@@ -1467,6 +1481,7 @@ media.nbcnewyork.com
 media.nationwide.com
 tags.nationwide.com
 +.myspacecdn.com
+r2cdn.myshopline.com
 +.myshopapps.com
 +.myfilebase.com
 +.msftstatic.com
@@ -1686,6 +1701,7 @@ s3.sitepoint.com
 icons.simplesvg.com
 api.simplesvg.com
 media.shopimind.com
++.cdn.shift8web.com
 +.sfbassets.com
 +.sendspace.com
 forest-mt-s3.seekrtech.com
@@ -1746,6 +1762,7 @@ uhf.microsoft.com
 csp.microsoft.com
 js.memberful.com
 static.mediafire.com
+images.mathworks.com
 form-assets.mailchimp.com
 cdn-images.mailchimp.com
 static.macupdate.com
@@ -1755,6 +1772,7 @@ images.macrumors.com
 scdn.line-apps.com
 cdn.lgrckt-in.com
 +.kinja-img.com
+cdn.joypixels.com
 cdn.joinhoney.com
 +.jisuimage.com
 cdn.jetphotos.com
@@ -1831,6 +1849,8 @@ static.coingecko.com
 assets.coingecko.com
 +.cnbetacdn.com
 resources.chessbase.com
+banners.chessbase.com
+share.chessbase.com
 webstatic.chargebee.com
 js1.chargebee.com
 js.chargebee.com
@@ -1940,6 +1960,7 @@ apps-static.route4me.com
 cdn.roboflow.com
 app.roboflow.com
 api.roboflow.com
+staticsource1.redotpay.com
 redircdn.com
 +.radix-ui.com
 quriobot.com
@@ -2060,6 +2081,7 @@ filestore.fortinet.com
 resizing.flixster.com
 static-assets-web.flixcart.com
 cdn-share-sprites.flaticon.com
+cdn-icons-png.flaticon.com
 cdn-uicons.flaticon.com
 media.flaticon.com
 cdn.firebase.com
@@ -2111,6 +2133,7 @@ cdn-assets.circleci.com
 assets-app.circleci.com
 app.chatwoot.com
 +.chasecdn.com
+js.chargify.com
 +.cdnfonts.com
 +.cartocdn.com
 assets.capterra.com
@@ -2174,6 +2197,7 @@ web-assets.zendesk.com
 img.youtube.com
 cdne-pics.youjizz.com
 +.yelpcdn.com
+cdn.yamibuy.com
 +.xingcdn.com
 preview.xgroovy.com
 static.xgroovy.com
@@ -2266,6 +2290,8 @@ pics.pornfhd.com
 celebrities-small.porndig.com
 m.porn3dx.com
 pbcdn1.podbean.com
+png.pngtree.com
+js.pngtree.com
 www.pngmart.com
 cdn-main.plus500.com
 cdn.plus500.com
@@ -2336,6 +2362,7 @@ img2.javdove.com
 assets.ipstack.com
 i.insider.com
 static.iris.informa.com
+static.inflect.com
 go.imperva.com
 +.imgyzzy.com
 +.imgikzy.com
@@ -2414,6 +2441,8 @@ assets.flodesk.com
 detectportal.firefox.com
 cdn.accounts.firefox.com
 +.ffzy888.com
+web-sdk-cdn.eyefitu.com
+web-sdk.eyefitu.com
 +.exp-tas.com
 +.espncdn.com
 cdn.equinix.com
@@ -2550,6 +2579,7 @@ assets.toiimg.com
 image.thefly.com
 +.tedcdn.com
 www.tbstat.com
+gravatar.tapglb.com
 cdn-static.talent.com
 +.sxccdn.com
 assets.swoogo.com
@@ -2782,10 +2812,13 @@ code.buywithprime.amazon.com
 d2c.aws.amazon.com
 time.akamai.com
 static.ahrefs.com
+cdn1.affirm.com
 +.assets.adidas.com
 +.glass.adidas.com
 +.9cache.com
 static.zuora.com
+barracuda-assets.zoovu.com
+barracuda-cdn.zoovu.com
 hello.zonos.com
 +.ytimg.com
 cdn-yotpo-images-production.yotpo.com
@@ -2904,6 +2937,7 @@ cdn.gigya.com
 cdn-1.ggjav.com
 media.gettr.com
 cdn.gettr.com
+account-widget-mfe.gcore.com
 i.gawby.com
 a.gawby.com
 cdn.app.fossa.com
@@ -2969,6 +3003,7 @@ lcdn-locator.apple.com
 news-assets.apple.com
 events-live.apple.com
 apple-relay.apple.com
+time.apple.com
 pba.apple.com
 vsmarketplacebadge.apphb.com
 +.ahcdn.com
@@ -3161,6 +3196,7 @@ videos.elephas.app
 +.edgeone.app
 bundle.dyn-rev.app
 +.vercel.app
+assets.slater.app
 pic.macked.app
 webassets.linear.app
 uploads.linear.app
@@ -3185,6 +3221,7 @@ s.pacn.ws
 cdn.donmai.us
 us01ccistatic.zoom.us
 eu01ccistatic.zoom.us
+file.zoom.us
 st3.zoom.us
 st2.zoom.us
 st1.zoom.us
@@ -3354,6 +3391,7 @@ cdn01.jotfor.ms
 cdn.jotfor.ms
 s3.acg.mn
 s3.m.0x.mk
+cdn.fasterthanli.me
 +.randomuser.me
 +.disconnect.me
 api.crashguard.me
@@ -3487,6 +3525,7 @@ link.storjshare.io
 +.statuspage.io
 +.statically.io
 +.stackblitz.io
+static.smartframe.io
 tracking.inflection.io
 gtranslate.io
 cdn.growthbook.io
@@ -3568,6 +3607,7 @@ static.status.io
 image.status.io
 media.smooch.io
 cdn.smooch.io
+files.webfe.shopee.io
 wire.shodan.io
 +.ingest.sentry.io
 +.ingest.us.sentry.io
