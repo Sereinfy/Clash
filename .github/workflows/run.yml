@@ -42,7 +42,9 @@ jobs:
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png"
-            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png"   
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png"
+
           )
           for url in "${urls[@]}"; do
             filename=$(basename "$url")
