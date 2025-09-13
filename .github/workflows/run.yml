@@ -42,6 +42,7 @@ jobs:
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png"   
           )
           for url in "${urls[@]}"; do
             filename=$(basename "$url")
@@ -97,7 +98,8 @@ jobs:
             "cdn_non_ip|https://ruleset.skk.moe/Clash/non_ip/cdn.txt"
             "cdn_domainset|https://ruleset.skk.moe/Clash/domainset/cdn.txt"
             "https://ruleset.skk.moe/Clash/domainset/speedtest.txt"
-
+            "https://ruleset.skk.moe/Clash/domainset/download.txt"
+            
             # DustinWin
             "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/ai.mrs"
           )
