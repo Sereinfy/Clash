@@ -41,6 +41,7 @@ jobs:
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png"
           )
           for url in "${urls[@]}"; do
             filename=$(basename "$url")
@@ -56,7 +57,6 @@ jobs:
           curl -sSL https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list -o rules/pcdn.txt
           curl -sSL https://raw.githubusercontent.com/sbwml/luci-app-mosdns/v5/luci-app-mosdns/root/etc/mosdns/rule/cloudflare-cidr.txt -o rules/cloudflare-cidr.txt
           curl -sSL https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list -o rules/fake_ip_filter.txt
-          curl -sSL https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Domain.yaml -o rules/Global_Domain.yaml
 
       - name: Download rules (remote URLs)
         run: |
@@ -90,11 +90,13 @@ jobs:
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub_No_Resolve.yaml"
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter_No_Resolve.yaml"
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker_No_Resolve.yaml"
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Domain.yaml"
 
             # Sukka / ruleset.skk.moe
             "https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt"
             "cdn_non_ip|https://ruleset.skk.moe/Clash/non_ip/cdn.txt"
             "cdn_domainset|https://ruleset.skk.moe/Clash/domainset/cdn.txt"
+            "https://ruleset.skk.moe/Clash/domainset/speedtest.txt"
 
             # DustinWin
             "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/ai.mrs"
