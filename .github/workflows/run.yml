@@ -69,7 +69,8 @@ jobs:
             "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/PROXY/Facebook.yaml"
             "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/PROXY/Cloudflare.yaml"
             "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Global-Services/YouTube.yaml"
-
+            "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Game.yaml"
+            "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/GlobalMedia.yaml"       
             # Loyalsoldier
             "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt"
             "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt"
