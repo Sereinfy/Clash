@@ -44,7 +44,8 @@ jobs:
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png"
-
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/IEPL.png"
+            
           )
           for url in "${urls[@]}"; do
             filename=$(basename "$url")
