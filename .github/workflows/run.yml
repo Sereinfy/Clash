@@ -79,12 +79,12 @@ jobs:
             "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt"
             "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt"
             "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
+            "telegram_ip.txt|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
             "https://raw.githubusercontent.com/Loyalsoldier/geoip/release/clash/ipcidr/fastly.txt"
 
             # Sereinfy
-            "https://raw.githubusercontent.com/Sereinfy/ipranges/main/amazon/cloudfront_ips.txt"
-            "akamai_ips|https://raw.githubusercontent.com/Sereinfy/ipranges/main/akamai/ipv4_merged.txt"
+            "cloudfront_ip.txt|https://raw.githubusercontent.com/Sereinfy/ipranges/main/amazon/cloudfront_ips.txt"
+            "akamai_ip.txt|https://raw.githubusercontent.com/Sereinfy/ipranges/main/akamai/ipv4_merged.txt"
 
             # blackmatrix7
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan_No_Resolve.yaml"
@@ -102,7 +102,7 @@ jobs:
             # Other
             "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/ai.list"
             "https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list"
-            "https://raw.githubusercontent.com/sbwml/luci-app-mosdns/v5/luci-app-mosdns/root/etc/mosdns/rule/cloudflare-cidr.txt"   
+            "cloudflare_ip.txt|https://raw.githubusercontent.com/sbwml/luci-app-mosdns/v5/luci-app-mosdns/root/etc/mosdns/rule/cloudflare-cidr.txt"   
             "https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list" 
           )
 
@@ -133,10 +133,10 @@ jobs:
         run: |
           urls=(
 
-            "cloudfront_ips.yaml|https://raw.githubusercontent.com/Sereinfy/ipranges/main/amazon/cloudfront_ips.txt"
-            "akamai_ips.yaml|https://raw.githubusercontent.com/Sereinfy/ipranges/main/akamai/ipv4_merged.txt"
+            "cloudfront_ip.yaml|https://raw.githubusercontent.com/Sereinfy/ipranges/main/amazon/cloudfront_ips.txt"
+            "akamai_ip.yaml|https://raw.githubusercontent.com/Sereinfy/ipranges/main/akamai/ipv4_merged.txt"
             "ai.yaml|https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/ai.list"
-            "cloudflare-cidr.yaml|https://raw.githubusercontent.com/sbwml/luci-app-mosdns/v5/luci-app-mosdns/root/etc/mosdns/rule/cloudflare-cidr.txt"   
+            "cloudflare_ip.yaml|https://raw.githubusercontent.com/sbwml/luci-app-mosdns/v5/luci-app-mosdns/root/etc/mosdns/rule/cloudflare-cidr.txt"   
             "fake_ip_filter.yaml|https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list"
             "cdn_domainset.yaml|https://ruleset.skk.moe/Clash/domainset/cdn.txt"
             "speedtest.yaml|https://ruleset.skk.moe/Clash/domainset/speedtest.txt"
