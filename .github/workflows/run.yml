@@ -163,66 +163,9 @@ jobs:
             fi
 
             echo "Downloading $url -> rules/$filename"
-            curl -L -f -o "rules/$filename" "$url" | sed "1i payload:" -e "s#^#  - '#;s#$#'#" || echo "Failed: $url"
+            curl -L -f -o "rules/$filename" "$url" | sed -e "#^#  - '#;s#$#'#" | sed "1i payload:" || echo "Failed: $url"
           done
 
-          for item in "${urls2[@]}"; do
-            if [[ "$item" == *"|"* ]]; then
-              # 有自定义名称
-              name="${item%%|*}"   # | 前部分
-              url="${item#*|}"     # | 后部分
-
-              # 判断 name 是否已经带扩展名
-              if [[ "$name" == *.* ]]; then
-                filename="$name"
-              else
-                ext="${url##*.}"   # 从 URL 提取扩展名
-                filename="$name.$ext"
-              fi
-            else
-              # 直接用 URL 的文件名
-              url="$item"
-              filename=$(basename "$url")
-            fi
-
-            echo "Downloading $url -> rules/$filename"
-            curl -L -f -o "rules/$filename" "$url" | sed "1i payload:" -e "s#^#  - '#;s#$#'#" || echo "Failed: $url"
-          done
-          
-      - name: Sukka to yaml
-        run: |
-          urls=(
-
-            "cloudfront_ips.yaml|https://raw.githubusercontent.com/Sereinfy/ipranges/main/amazon/cloudfront_ips.txt"
-            "akamai_ips.yaml|https://raw.githubusercontent.com/Sereinfy/ipranges/main/akamai/ipv4_merged.txt"
-            "ai.yaml|https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/ai.list"
-            "cloudflare-cidr.yaml|https://raw.githubusercontent.com/sbwml/luci-app-mosdns/v5/luci-app-mosdns/root/etc/mosdns/rule/cloudflare-cidr.txt"   
-            "fake_ip_filter.yaml|https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list" 
-          )
-
-          for item in "${urls[@]}"; do
-            if [[ "$item" == *"|"* ]]; then
-              # 有自定义名称
-              name="${item%%|*}"   # | 前部分
-              url="${item#*|}"     # | 后部分
-
-              # 判断 name 是否已经带扩展名
-              if [[ "$name" == *.* ]]; then
-                filename="$name"
-              else
-                ext="${url##*.}"   # 从 URL 提取扩展名
-                filename="$name.$ext"
-              fi
-            else
-              # 直接用 URL 的文件名
-              url="$item"
-              filename=$(basename "$url")
-            fi
-
-            echo "Downloading $url -> rules/$filename"
-            curl -L -f -o "rules/$filename" "$url" | sed "1i payload:" -e "s#^#- '#;s#$#'#" || echo "Failed: $url"
-          done
-          
       - name: Download and unzip `mihomo` core
         run: |
           mkdir -p tools
