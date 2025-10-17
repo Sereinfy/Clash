@@ -127,7 +127,8 @@ jobs:
             fi
 
             echo "Downloading $url -> rules/$filename"
-            curl -L -f -o "rules/$filename" "$url" || echo "Failed: $url"
+            # 下载并处理格式
+            if ! curl -sSL "$url" | sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" | sed "1i payload:" > "rules/$filename"; then echo "Failed: $url"; fi
           done
 
       - name: other to yaml
