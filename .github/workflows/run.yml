@@ -60,7 +60,11 @@ jobs:
           curl -sSL https:/ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt | grep -v -e '^#' -e '^$' >> rules/china_ip.txt
           curl -sSL "https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt" | sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" | sed "1i payload:" > rules/apple_cn.yaml
           curl -sSL "https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list" | sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" | sed "1i payload:" > rules/pcdn.yaml
-          curl -sSL "https://raw.githubusercontent.com/Sereinfy/Adrules/main/rules/adblockmihomolite.yaml" | sed -e '/^\s*#/d' -e '/^\s*$/d' > rules/adblock_lite.yaml  
+          curl -sSL "https://raw.githubusercontent.com/Sereinfy/Adrules/main/rules/adblockmihomolite.yaml" | sed -e '/^\s*#/d' -e '/^\s*$/d' > rules/adblock_lite.yaml
+          curl -sSL "https://raw.githubusercontent.com/Loyalsoldier/geoip/release/clash/ipcidr/fastly.txt" | sed -e '/^payload:/d' -e "s/^  - '\(.*\)'$/\1/" > rules/fastly_ip.txt
+          curl -sSL "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt" | sed -e '/^payload:/d' -e "s/^  - '\(.*\)'$/\1/" > rules/telegram_ip.txt
+
+
       - name: Download rules (remote URLs)
         run: |
           urls=(
@@ -79,8 +83,6 @@ jobs:
             "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt"
             "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt"
             "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt"
-            "telegram_ip.txt|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/geoip/release/clash/ipcidr/fastly.txt"
 
             # Sereinfy
             "cloudfront_ip.txt|https://raw.githubusercontent.com/Sereinfy/ipranges/main/amazon/cloudfront_ips.txt"
@@ -133,10 +135,7 @@ jobs:
         run: |
           urls=(
 
-            "cloudfront_ip.yaml|https://raw.githubusercontent.com/Sereinfy/ipranges/main/amazon/cloudfront_ips.txt"
-            "akamai_ip.yaml|https://raw.githubusercontent.com/Sereinfy/ipranges/main/akamai/ipv4_merged.txt"
             "ai.yaml|https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/ai.list"
-            "cloudflare_ip.yaml|https://raw.githubusercontent.com/sbwml/luci-app-mosdns/v5/luci-app-mosdns/root/etc/mosdns/rule/cloudflare-cidr.txt"   
             "fake_ip_filter.yaml|https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list"
             "cdn_domainset.yaml|https://ruleset.skk.moe/Clash/domainset/cdn.txt"
             "speedtest.yaml|https://ruleset.skk.moe/Clash/domainset/speedtest.txt"
