@@ -127,8 +127,7 @@ jobs:
             fi
 
             echo "Downloading $url -> rules/$filename"
-            # 下载并处理格式
-            if ! curl -sSL "$url" | sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" | sed "1i payload:" > "rules/$filename"; then echo "Failed: $url"; fi
+            curl -L -f -o "rules/$filename" "$url" || echo "Failed: $url"
           done
 
       - name: other to yaml
@@ -164,7 +163,7 @@ jobs:
             fi
 
             echo "Downloading $url -> rules/$filename"
-            curl -L -f -o "rules/$filename" "$url" | sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - '/; s/$/'/" | sed "1i payload:" || echo "Failed: $url"
+            if ! curl -sSL "$url" | sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" | sed "1i payload:" > "rules/$filename"; then echo "Failed: $url"; fi
           done
 
       - name: Download and unzip `mihomo` core
