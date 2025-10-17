@@ -55,11 +55,11 @@ jobs:
 
       - name: Download rules
         run: |
-          curl -sSL "https://nsfw-small.oisd.nl" | sed -e '/^[![]/d' -e '/^$/d' -e 's/||\(.*\)\^/  - '\''+.\1'\''/g' | sed '1i payload:' > rules/oisd_nsfw_small.yaml
+          curl -sSL "https://nsfw-small.oisd.nl" | sed -e '/^[![]/d' -e '/^\s*$/d' -e 's/||\(.*\)\^/  - '\''+.\1'\''/g' | sed '1i payload:' > rules/oisd_nsfw_small.yaml
           curl -sSL https:/ruleset.skk.moe/Clash/ip/china_ip.txt -o rules/china_ip.txt && \
           curl -sSL https:/ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt | grep -v -e '^#' -e '^$' >> rules/china_ip.txt
-          curl -sSL "https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt" | sed -e "s#^# - #" | sed "1i payload:" > rules/apple_cn.yaml
-          curl -sSL "https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list" | sed -e "s#^# - #" | sed "1i payload:" > rules/pcdn.yaml
+          curl -sSL "https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt" | sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" | sed "1i payload:" > rules/apple_cn.yaml
+          curl -sSL "https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list" | sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" | sed "1i payload:" > rules/pcdn.yaml
           
       - name: Download rules (remote URLs)
         run: |
@@ -163,7 +163,7 @@ jobs:
             fi
 
             echo "Downloading $url -> rules/$filename"
-            curl -L -f -o "rules/$filename" "$url" | sed -e "#^#  - '#;s#$#'#" | sed "1i payload:" || echo "Failed: $url"
+            curl -L -f -o "rules/$filename" "$url" | sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - '/; s/$/'/" | sed "1i payload:" || echo "Failed: $url"
           done
 
       - name: Download and unzip `mihomo` core
