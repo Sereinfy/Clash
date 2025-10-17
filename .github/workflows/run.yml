@@ -58,9 +58,6 @@ jobs:
           curl -sSL "https://nsfw-small.oisd.nl" | sed -e '/^[![]/d' -e '/^$/d' -e 's/||\(.*\)\^/  - '\''+.\1'\''/g' | sed '1i payload:' > rules/oisd_nsfw_small.yaml
           curl -sSL https:/ruleset.skk.moe/Clash/ip/china_ip.txt -o rules/china_ip.txt && \
           curl -sSL https:/ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt | grep -v -e '^#' -e '^$' >> rules/china_ip.txt
-          curl -sSL https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list -o rules/pcdn.txt
-          curl -sSL https://raw.githubusercontent.com/sbwml/luci-app-mosdns/v5/luci-app-mosdns/root/etc/mosdns/rule/cloudflare-cidr.txt -o rules/cloudflare-cidr.txt
-          curl -sSL https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list -o rules/fake_ip_filter.txt
 
       - name: Download rules (remote URLs)
         run: |
@@ -103,8 +100,11 @@ jobs:
             "https://ruleset.skk.moe/Clash/domainset/speedtest.txt"
             "https://ruleset.skk.moe/Clash/domainset/download.txt"
             
-            # DustinWin
+            # Other
             "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/ai.list"
+            "https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list"
+            "https://raw.githubusercontent.com/sbwml/luci-app-mosdns/v5/luci-app-mosdns/root/etc/mosdns/rule/cloudflare-cidr.txt"   
+            "https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list" 
           )
 
           for item in "${urls[@]}"; do
