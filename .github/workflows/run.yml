@@ -97,16 +97,8 @@ jobs:
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker_No_Resolve.yaml"
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Domain.yaml"
 
-            # Sukka / ruleset.skk.moe
-            "https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt"
-            "cdn_domainset|https://ruleset.skk.moe/Clash/domainset/cdn.txt"
-            "https://ruleset.skk.moe/Clash/domainset/speedtest.txt"
-            
             # Other
-            "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/ai.list"
-            "https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list"
             "cloudflare_ip.txt|https://raw.githubusercontent.com/sbwml/luci-app-mosdns/v5/luci-app-mosdns/root/etc/mosdns/rule/cloudflare-cidr.txt"   
-            "https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list" 
           )
 
           for item in "${urls[@]}"; do
