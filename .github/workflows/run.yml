@@ -80,10 +80,10 @@ jobs:
             "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Game.yaml"
             "https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/GlobalMedia.yaml"       
             # Loyalsoldier
-            "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt"
-            "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt"
+            "apple.yaml|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt"
+            "google.yaml|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt"
+            "gfw.yaml|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt"
+            "applications.yaml|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt"
 
             # Sereinfy
             "cloudfront_ip.txt|https://raw.githubusercontent.com/Sereinfy/ipranges/main/amazon/cloudfront_ips.txt"
