@@ -3049,9 +3049,6 @@ payload:
   - DOMAIN-SUFFIX,wuxizazhi.com.cn
   - DOMAIN-SUFFIX,wuxizazhi.net
   - DOMAIN-SUFFIX,wuxizazhi.net.cn
-  ## > Coding
-  - DOMAIN-SUFFIX,coding.me
-  - DOMAIN-SUFFIX,coding.net
   ## > CSDN
   - DOMAIN-SUFFIX,codechina.net
   - DOMAIN-SUFFIX,csdn.com
@@ -7137,11 +7134,7 @@ payload:
   - DOMAIN-SUFFIX,cloudsesbk.com.cn
   - DOMAIN-SUFFIX,cloudstudio.run
   - DOMAIN-SUFFIX,cocdn.cn
-  - DOMAIN-SUFFIX,codehub.cn
   - DOMAIN-SUFFIX,codeweixin.com
-  - DOMAIN-SUFFIX,coding-newsletter.com
-  - DOMAIN-SUFFIX,coding.net
-  - DOMAIN-SUFFIX,codingcorp.net
   - DOMAIN-SUFFIX,codm.com
   - DOMAIN-SUFFIX,cofile.com.cn
   - DOMAIN-SUFFIX,cofile.net
@@ -8366,6 +8359,12 @@ payload:
   - DOMAIN-SUFFIX,tenpay.com
   - DOMAIN-SUFFIX,wisefx.cn
   - DOMAIN-SUFFIX,wisefx.com
+  ## >> Coding
+  - DOMAIN-SUFFIX,codehub.cn
+  - DOMAIN-SUFFIX,coding-newsletter.com
+  - DOMAIN-SUFFIX,coding.me
+  - DOMAIN-SUFFIX,coding.net
+  - DOMAIN-SUFFIX,codingcorp.net
   ## >> Foxmail
   - DOMAIN-SUFFIX,foxmail.com
   - DOMAIN-SUFFIX,foxmail.com.cn
@@ -10446,6 +10445,8 @@ payload:
   - DOMAIN-SUFFIX,95589.com
   - DOMAIN-SUFFIX,cntaiping.com
   - DOMAIN-SUFFIX,cntaiping.com.hk
+  - DOMAIN-SUFFIX,itaiping.com
+  - DOMAIN-SUFFIX,tp95589.com
   ## > 中互智安
   - DOMAIN-SUFFIX,lapsn.com.cn
   - DOMAIN-SUFFIX,mobileservice.cn
