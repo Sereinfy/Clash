@@ -1,0 +1,266 @@
+mode: rule
+# ipv6 支持
+ipv6: true
+log-level: info
+# 允许局域网连接
+allow-lan: true
+# socks5/http 端口
+mixed-port: 7890
+# 统一延迟
+unified-delay: true
+# TCP 并发
+tcp-concurrent: true
+
+external-controller: :9090
+external-ui-url: https://hub.gitmirror.com/https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip
+external-ui: ui
+external-ui-name: zashboard
+
+geodata-mode: false
+geo-auto-update: true
+geo-update-interval: 24
+find-process-mode: always
+global-client-fingerprint: random
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+  
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: true
+  enhanced-mode: fake-ip #redir-host
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - rule-set:fakeip-filter   
+  nameserver:
+    - 223.5.5.5
+
+  nameserver-policy:
+    '+.pc528.net': '223.5.5.5'
+tun:
+  enable: true  # enable 'true'
+  stack: system  # or 'gvisor'
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+    
+sniffer:
+  enable: false
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+       
+listeners:
+- name: socks-in
+  type: socks
+  port: 10808
+  proxy: 机场手动
+
+proxies:
+
+rule-anchor: # 锚点引用
+  # 测速地址
+  TestUrl: &TestUrl {url: "https://captive.apple.com", expected-status: 200/302}
+  # 远程参数
+  Classical: &classic {type: http, interval: 86400, behavior: classical}
+  ipcidr: &ip {type: http, interval: 86400, behavior: ipcidr, format: text}
+  domain: &domain {type: http, interval: 86400, behavior: domain}
+  # 自动过滤
+  Exclude: &Exclude {exclude-filter: 推荐|过期|剩余|到期|官网|失联|回国|群|长期|重置|余额|充值|氪金|套餐|限制}
+  Hy2: &Hy2 {exclude-type: hysteria2} 
+  # 地区过滤
+  filterHK: &filterHK {exclude-filter: "0.[1-9]`no-include", filter: "(?i)(香港|🇭🇰|hk|hongkong|hong kong|HKG)"}
+  filterJP: &filterJP {exclude-filter: "0.[1-9]`no-include", filter: "(?i)(日本|东京|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK)"}
+  filterUS: &filterUS {exclude-filter: "0.[1-9]`no-include", filter: "(?i)(美国|🇺🇸|洛杉矶|圣何塞|纽约|凤凰城|us|unitedstates|united states)"}
+  filterSG: &filterSG {exclude-filter: "0.[1-9]`no-include", filter: "(?i)(新加坡|🇸🇬|sg|singapore)"}
+  filterLow: &filterLow {exclude-filter: "(?i)(BT|下载)`no-include", filter: "0.[1-9]"}
+  filterRelay: &filterRelay {exclude-filter: "(0|[2-9])(([.][0-9])?([xX]|倍)|[.][0-9])", filter: "(?i)(日本|新加坡)"}
+
+  # 自定义 
+
+  use_host: &use_host [RN,RN_2] #只引用自建
+  no_host: &no_host (?i)(rn) #过滤掉自建
+  FAKE_IEPL: &FAKE_IEPL 一分|良心云 #过滤掉其他专线
+  # 分组
+  Group_Select: &Group_Select {type: select, interval: 300, <<: *TestUrl}
+  Group_vps: &Group_vps {type: select, interval: 300, <<: *TestUrl, use: *use_host, include-all-proxies: true, proxies: [DIRECT,机场手动]}
+  Group_Github: &Group_Github {type: select, interval: 300, <<: *TestUrl, use: *use_host, include-all-proxies: true, proxies: [国际互联,美国自动,机场手动,DIRECT]}
+  Group_Air: &Group_Air {type: select, interval: 300, <<: *TestUrl, include-all-providers: true, exclude-filter: *no_host, proxies: [美国自动,香港自动,日本自动,新加坡自动,专线节点,低倍节点,链式节点]}
+  Group_All: &Group_All {type: select, interval: 300, <<: *TestUrl, proxies: [国际互联,美国自动,香港自动,日本自动,新加坡自动,专线节点,低倍节点,链式节点,机场手动,DIRECT]}
+  Group_CDN: &Group_CDN {type: select, interval: 300, <<: *TestUrl, proxies: [DIRECT,国际互联,美国自动,香港自动,日本自动,新加坡自动,专线节点,低倍节点,链式节点,机场手动]}
+  # 特殊
+#  Group_Auto: &Group_Auto {type: smart, policy-priority: "新加坡:1.2;高速:1.1;亚马逊:1.1", uselightgbm: true, collectdata: false, include-all-providers: true}
+#  Group_Relay: &Group_Relay {type: smart, policy-priority: "日本:1.1", uselightgbm: true, collectdata: false, include-all-providers: true}
+  Group_Auto: &Group_Auto {type: url-test, include-all-providers: true, lazy: true, interval: 180, timeout: 3000, max-failed-times: 2, tolerance: 50, <<: *TestUrl}
+  Group_Relay: &Group_Relay {type: url-test, include-all-providers: true, lazy: false, interval: 60, timeout: 3000, max-failed-times: 2, tolerance: 50, <<: *TestUrl}
+  
+  
+proxy-providers:
+ 
+proxy-groups:
+- {name: 国际互联, <<: *Group_vps, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Proxy.png}
+- {name: 机场手动, <<: *Group_Air, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Airport.png}
+- {name: Twitter, <<: *Group_All, hidden: false, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Twitter.png}
+- {name: Google, <<: *Group_All, hidden: false, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Google_Search.png}
+- {name: YouTube, <<: *Group_All, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/YouTube2.png}
+- {name: AI Chat, <<: *Group_All, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/anthropic.png}
+- {name: Telegram, <<: *Group_All, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Telegram-02.png}
+- {name: Pikpak, <<: *Group_All, hidden: true, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/PikPak.png}
+- {name: Meta, <<: *Group_All, hidden: false, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/meta.png}
+
+- {name: GitHub, <<: *Group_Github, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/GitHub.png}
+
+- {name: Mickey, <<: *Group_Select, proxies: [链式节点,低倍节点,国际互联], icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Mickey.png}
+- {name: 静态 CDN, <<: *Group_Select, proxies: [链式节点,低倍节点,国际互联], icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Global.png}
+
+- {name: 国际媒体, <<: *Group_All, include-all-providers: true, filter: "流媒体|视频", icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Streaming.png}
+- {name: Cloudflare 官网, <<: *Group_All, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/1111.png}
+
+- {name: Game, <<: *Group_Select, proxies: [国际互联,DIRECT], icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Game.png}
+- {name: 广告拦截, <<: *Group_Select, proxies: [REJECT,DIRECT], icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Reject.png}
+- {name: 国内直连, <<: *Group_Select, proxies: [DIRECT,国际互联], hidden: true, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/CN.png}
+- {name: Apple 国际服务, <<: *Group_Select, proxies: [DIRECT,国际互联], hidden: true, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/apple.png}
+- {name: 漏网之鱼, <<: *Group_All, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Final.png }
+
+- {name: 链式节点, <<: [*filterRelay,*Group_Relay], hidden: false, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Chain4.png}
+- {name: 低倍节点, <<: *Group_Select, include-all-providers: true, proxies: [低倍率自动], filter: "0.[1-9]", icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/ForeignMedia.png}
+- {name: 专线节点, <<: *Group_Select, include-all-providers: true, exclude-filter: *FAKE_IEPL, filter: "专线|IEPL|IPLC", exclude-type: "hysteria2|tuic", icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/IEPL.png}
+
+- {name: Fastly CDN, <<: *Group_CDN, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/fastly3.png}
+- {name: Amazon CDN,<<: *Group_CDN, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Amazon.png}
+- {name: Akamai CDN, <<: *Group_CDN, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/akamai.png}
+- {name: Cloudflare CDN,<<: *Group_All, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Cloudflare.png}
+
+# 分隔,下面是地区分组
+- {name: 香港自动, <<: [*filterHK,*Group_Auto], hidden: true, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Hong_Kong.png}
+- {name: 日本自动, <<: [*filterJP,*Group_Auto], hidden: true, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Japan.png}
+- {name: 美国自动, <<: [*filterUS,*Group_Auto], hidden: true, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/United_States.png}
+- {name: 新加坡自动, <<: [*filterSG,*Group_Auto], hidden: true, tolerance: 30, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/Singapore.png}
+- {name: 低倍率自动, <<: [*filterLow,*Group_Auto], hidden: true, icon: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/icons/ForeignMedia.png}
+
+rules:
+  - SUB-RULE,(OR,((NETWORK,UDP),(NETWORK,TCP))),custom #子规则
+  - RULE-SET,Ads,广告拦截
+  - RULE-SET,PCDN,REJECT
+  - RULE-SET,LAN,DIRECT
+  - RULE-SET,Applications,DIRECT
+  - RULE-SET,Tracker,DIRECT
+  - RULE-SET,AI,AI Chat
+  - RULE-SET,Apple_cn,国内直连 # 云上贵州
+  - RULE-SET,Apple_cdn,国内直连 # felixonmars/dnsmasq-china-list
+  - RULE-SET,Apple,Apple 国际服务 # NoChina
+  - RULE-SET,Microsoft,国内直连
+  - RULE-SET,China,国内直连
+  
+  - RULE-SET,Pikpak,Pikpak
+  - RULE-SET,GitHub,GitHub
+  - RULE-SET,Google,Google
+  - RULE-SET,Google_cn,Google
+  - RULE-SET,YouTube,YouTube
+  - RULE-SET,Twitter,Twitter
+  - RULE-SET,Meta,Meta
+  
+  - RULE-SET,SpeedTest,国际互联
+  - RULE-SET,Cloudflare,Cloudflare 官网
+
+  - RULE-SET,cdn_domainset,静态 CDN # 放在重要账户下面，防止鉴权导致的风控
+  
+  - RULE-SET,NSFW,Mickey
+  - RULE-SET,GlobalMedia,国际媒体
+  - RULE-SET,Game,Game
+  - RULE-SET,Telegram_ip,Telegram,no-resolve
+  - RULE-SET,GFW,国际互联 # 先用 GFW列表 过滤一遍下面的 CDN
+  ### 下面发起 DNS
+  - RULE-SET,Cloudflare_ip,Cloudflare CDN
+  - RULE-SET,Cloudfront_ip,Amazon CDN
+  - RULE-SET,Akamai_ip,Akamai CDN
+  - RULE-SET,Fastly_ip,Fastly CDN
+  - RULE-SET,China_ip,国内直连
+  - RULE-SET,Global,国际互联 # 漏网之鱼走代理可以去掉
+  - MATCH,漏网之鱼
+  
+sub-rules:
+  custom:
+    - AND,((NETWORK,UDP),(DST-PORT,443),(RULE-SET,YouTube)),REJECT-DROP # 屏蔽YouTube quic
+    - AND,((NETWORK,UDP),(DOMAIN-REGEX,(?i)stun|turn)),REJECT-DROP # WebRTC传输
+    - AND,((DOMAIN-KEYWORD,bili),(DOMAIN-REGEX,(?i)pcdn|mcdn)),REJECT
+    - AND,((DOMAIN-KEYWORD,jav),(NOT,((DOMAIN-KEYWORD,java)))),国际互联
+    - OR,((DOMAIN-SUFFIX,akamai.net),(DOMAIN-SUFFIX,akamaized.net)),Akamai CDN
+    - OR,((DOMAIN-KEYWORD,fuliba),(DOMAIN-KEYWORD,wnflb)),国际互联
+    - OR,((DOMAIN-KEYWORD,zgocloud),(DOMAIN-KEYWORD,zgovps)),国内直连
+    - DOMAIN-KEYWORD,porn,国际互联
+    - DOMAIN-KEYWORD,fc2,国际互联
+    - DOMAIN-KEYWORD,giffgaff,DIRECT
+    - DOMAIN,mcs.zijieapi.com,DIRECT # 日志上报，请求风暴
+    - DOMAIN-SUFFIX,imagestwist.com,国际互联
+    - DOMAIN-SUFFIX,geo2.adobe.com,REJECT-DROP
+    - DOMAIN-SUFFIX,in.applicationinsights.azure.com,REJECT-DROP
+    - DOMAIN-SUFFIX,pc528.net,国内直连
+    - DOMAIN-SUFFIX,liangxin.xyz,国际互联
+    - DOMAIN-SUFFIX,gitbook.io,国际互联
+    - DOMAIN-SUFFIX,51cg1.com,国际互联
+    - DOMAIN-SUFFIX,355.fun,国际互联
+    - DOMAIN-SUFFIX,cloudflare-dns.com,国际互联
+    - DOMAIN-SUFFIX,tgstat.com,国际互联
+    - DOMAIN,dns.cloudflare.com,国际互联
+    - DOMAIN-SUFFIX,cloudflare-gateway.com,国内直连
+    - DOMAIN-SUFFIX,ipchaxun.net,DIRECT # ip138
+    - DOMAIN-SUFFIX,surrit.com,Mickey # missav
+    - DOMAIN,api.installer.xiaomi.com,DIRECT #安装检查放行
+    
+rule-providers: # https://clash.wiki/premium/rule-providers.html
+
+  # ==================== Classic Rules ================ #
+  China: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/Domestic.yaml}
+  LAN: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/Lan.yaml}
+  Apple: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/Apple.yaml}
+  Microsoft: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/Microsoft.yaml}
+  Google: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/Google.yaml}
+  Meta: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/Facebook.yaml}
+  Cloudflare: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/Cloudflare.yaml}
+  YouTube: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/YouTube.yaml}
+  Game: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/Game.yaml}
+  GlobalMedia: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/GlobalMedia.yaml}
+  
+  GitHub: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/GitHub.yaml}
+  Twitter: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/Twitter.yaml}
+  Tracker: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/PT.yaml}
+  Applications: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/applications.yaml}
+  Apple_cn: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/apple_cn.yaml}
+  PCDN: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/pcdn.yaml}
+  Pikpak: {<<: *classic, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/pikpak.yaml}
+
+  # =================== Domain Rules ================== #
+  Ads: {<<: *domain, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/adblock_lite.yaml}
+  GFW: {<<: *domain, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/gfw.yaml}
+  Apple_cdn: {<<: *domain, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/apple_cdn.yaml}
+  Google_cn: {<<: *domain, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/google_cn.yaml}
+
+  SpeedTest: {<<: *domain, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/speedtest.yaml}
+  cdn_domainset: {<<: *domain, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/cdn_domainset.yaml}
+  fakeip-filter: {<<: *domain, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/fake_ip_filter.yaml}
+  AI: {<<: *domain, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/ai.yaml}
+  NSFW: {<<: *domain, format: mrs, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/oisd_nsfw_small.mrs}
+  Global: {<<: *domain, format: mrs, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/Global_Domain.mrs}
+  
+  # ==================== IP Rules ===================== #
+  China_ip: {<<: *ip, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/china_ip.txt}
+  Cloudflare_ip: {<<: *ip, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/cloudflare_ip.txt}
+  Cloudfront_ip: {<<: *ip, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/cloudfront_ip.txt}
+  Akamai_ip: {<<: *ip, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/akamai_ip.txt}
+  Fastly_ip: {<<: *ip, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/fastly_ip.txt}
+  Telegram_ip: {<<: *ip, url: https://hub.gitmirror.com/https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/telegram_ip.txt}
+  
