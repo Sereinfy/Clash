@@ -13,6 +13,7 @@ payload:
   - 'sydney.bing.com'
   - 'webchannel-alkalimakersuite-pa.clients6.google.com'
   - '+.ai.azure.com'
+  - '+.aida.googleapis.com'
   - '+.aisandbox-pa.googleapis.com'
   - '+.aistudio.google.com'
   - '+.anthropic.com'
