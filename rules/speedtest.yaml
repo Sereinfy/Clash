@@ -581,6 +581,7 @@ payload:
   - 'speed.inet-isp.com'
   - 'tr.hostligo.com'
   - 'speedtest.hostimux.com'
+  - 'ookla-mia.gigsouth.com'
   - 'sv-ookla.geolinks.com'
   - 'la-ookla.geolinks.com'
   - '+.speedtest.frontier.com'
