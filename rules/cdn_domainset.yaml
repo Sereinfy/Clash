@@ -574,6 +574,7 @@ payload:
   - '+.kakaocdn.net'
   - '+.jsdelivr.net'
   - 'img.javstore.net'
+  - '+.hsstatic.net'
   - 'img.highporn.net'
   - 'cdn.highporn.net'
   - '+.forgecdn.net'
