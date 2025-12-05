@@ -1518,6 +1518,7 @@ payload:
   - 'speedtest01.syd1.spintel.net.au'
   - 'speedtest01.per1.spintel.net.au'
   - 'speedtest01.mel1.spintel.net.au'
+  - 'speedtest01.bne1.spintel.net.au'
   - 'ookla.sy1.neptune.net.au'
   - 'ookla.me1.neptune.net.au'
   - 'ookla.p2.neptune.net.au'
@@ -1599,3 +1600,4 @@ payload:
   - 'speedtest1.sxbb.com.au'
   - 'speedtest.58243.as'
   - '+.speedtest.angolacables.co.ao'
+  - 'speedtest-ams.baremetal.ae'
