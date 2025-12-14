@@ -59,7 +59,9 @@ jobs:
           { curl -sSL "https://ruleset.skk.moe/Clash/ip/china_ip.txt"; curl -sSL "https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt"; } | grep -v -e '^#' -e '^$' > rules/china_ip.txt
           curl -sSL "https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt" | sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" | sed "1i payload:" > rules/apple_cn.yaml
           curl -sSL "https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list" | sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" | sed "1i payload:" > rules/pcdn.yaml
-          curl -sSL "https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/pikpak.list" | sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" | sed "1i payload:" > rules/pikpak.yaml 
+          curl -sSL "https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/pikpak.list" | sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" | sed "1i payload:" > rules/pikpak.yaml
+          curl -sSL "https://raw.githubusercontent.com/sooyaaabo/Loon/refs/heads/main/Rule/Media-Direct.lsr" | sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" | sed "1i payload:" > rules/Media_Direct.yaml
+          curl -sSL "https://raw.githubusercontent.com/sooyaaabo/Loon/refs/heads/main/Rule/Media-Proxy.lsr" | sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" | sed "1i payload:" > rules/Media_Proxy.yaml
           curl -sSL "https://raw.githubusercontent.com/Sereinfy/Adrules/main/rules/adblockmihomolite.yaml" | sed -e '/^\s*#/d' -e '/^\s*$/d' > rules/adblock_lite.yaml
           curl -sSL "https://raw.githubusercontent.com/Loyalsoldier/geoip/release/clash/ipcidr/fastly.txt" | sed -e '/^payload:/d' -e "s/^  - '\(.*\)'$/\1/" > rules/fastly_ip.txt
           curl -sSL "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt" | sed -e '/^payload:/d' -e "s/^  - '\(.*\)'$/\1/" > rules/telegram_ip.txt
