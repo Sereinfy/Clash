@@ -10352,6 +10352,7 @@ payload:
   - PROCESS-NAME,com.xiaomi.mibrain.speech
   - PROCESS-NAME,小米云服务.exe
   ## > 小米
+  - DOMAIN-SUFFIX,addatachain.cn
   - DOMAIN-SUFFIX,aleenote.cn
   - DOMAIN-SUFFIX,aleenote.com
   - DOMAIN-SUFFIX,alibiji.cn
@@ -10366,6 +10367,7 @@ payload:
   - DOMAIN-SUFFIX,mgslb.com
   - DOMAIN-SUFFIX,mgslb.net
   - DOMAIN-SUFFIX,mgslb.org
+  - DOMAIN-SUFFIX,mi-dun.com
   - DOMAIN-SUFFIX,mi.中国
   - DOMAIN-SUFFIX,mi.cn
   - DOMAIN-SUFFIX,mi.com
@@ -10374,9 +10376,18 @@ payload:
   - DOMAIN-SUFFIX,mifile.cn
   - DOMAIN-SUFFIX,mij.cc
   - DOMAIN-SUFFIX,mijia.tech
+  - DOMAIN-SUFFIX,mijiayoupin.com
   - DOMAIN-SUFFIX,miot-spec.org
   - DOMAIN-SUFFIX,mipush.com
+  - DOMAIN-SUFFIX,misrm.cn
+  - DOMAIN-SUFFIX,misrm.com
+  - DOMAIN-SUFFIX,misrm.com.cn
+  - DOMAIN-SUFFIX,misrm.net
   - DOMAIN-SUFFIX,miyun.com
+  - DOMAIN-SUFFIX,openvela.com
+  - DOMAIN-SUFFIX,qinghedaxue.com
+  - DOMAIN-SUFFIX,sodajs.org
+  - DOMAIN-SUFFIX,xiaomimimo.com
   - DOMAIN-SUFFIX,xiaomimobile.com
   - DOMAIN-SUFFIX,xiaomiprint.com
   - DOMAIN-SUFFIX,xiaomisa.cn
