@@ -1231,6 +1231,7 @@ payload:
   - 'velocimetro.esolution.srv.br'
   - 'ookla.paulonet.srv.br'
   - 'teste.mov.pro.br'
+  - 'speedtest.centralnetprovedor.net.br'
   - '+.linknetspeedtest.net.br'
   - 'ookla.playmaisreverso.net.br'
   - 'speedtest.pinguimtelecom.net.br'
