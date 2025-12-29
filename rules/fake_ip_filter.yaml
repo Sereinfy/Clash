@@ -60,6 +60,7 @@ payload:
   - 'localhost.ptlogin2.qq.com'
   - 'localhost.sec.qq.com'
   - 'localhost.*.weixin.qq.com'
+  - '+.kk-rays.com'
   - '+.steamcontent.com'
   - '+.srv.nintendo.net'
   - '*.n.n.srv.nintendo.net'
