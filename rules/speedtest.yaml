@@ -494,6 +494,7 @@ payload:
   - '+.speedtest.serverside.com'
   - 'speedtest.serveroyun.com'
   - 'speed.serveroyun.com'
+  - 'mispeed.rackgenius.com'
   - 'lg.mia.plasmarack.com'
   - 'speedtest.pilotfiber.com'
   - 'speedsin.phoenixnap.com'
