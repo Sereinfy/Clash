@@ -3516,6 +3516,7 @@ payload:
   - 'static-secure-uploads.ui.com'
   - 'secure-uploads.ui.com'
   - 'img.community.ui.com'
+  - 'cdn-nsbus.ui.com'
   - 'media.identity.ui.com'
   - 'status.ui.com'
   - 'static.ui.com'
