@@ -161,12 +161,11 @@ jobs:
       - name: Download and unzip `mihomo` core
         run: |
           mkdir -p tools
-          curl -L https://github.com/DustinWin/proxy-tools/releases/download/mihomo/mihomo-meta-linux-amd64-v3.tar.gz | tar -zx -C tools/
-          mv -f tools/CrashCore tools/mihomo
+          curl -L -o tools/mihomo https://github.com/DustinWin/proxy-tools/releases/download/mihomo/mihomo-meta-linux-amd64-v3.upx
+          chmod +x tools/mihomo
 
       - name: Generate `mihomo` rule-set (mrs)
         run: |
-          chmod +x tools/mihomo
           tools/mihomo convert-ruleset domain yaml rules/oisd_nsfw_small.yaml rules/oisd_nsfw_small.mrs
           tools/mihomo convert-ruleset domain yaml rules/Global_Domain.yaml rules/Global_Domain.mrs
           rm -rf tools/
