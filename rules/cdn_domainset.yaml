@@ -2112,6 +2112,7 @@ payload:
   - '+.aspnetcdn.com'
   - '+.appmifile.com'
   - '+.anyhentai.com'
+  - 'assets-proxy.anthropic.com'
   - 'www-cdn.anthropic.com'
   - 's-cdn.anthropic.com'
   - 'a-cdn.anthropic.com'
