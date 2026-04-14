@@ -1894,6 +1894,7 @@ payload:
   - '+.tokyvideo.com'
   - '+.tnastatic.com'
   - '+.tinifycdn.com'
+  - 'telemetry.timescale.com'
   - '+.tiktokcdn.com'
   - 'assets.tigerdata.com'
   - 'thumbsnap.com'
