@@ -2139,6 +2139,7 @@ payload:
   - 'pa1.aninoapps.com'
   - 'images.anandtech.com'
   - 'ip-ranges.amazonaws.com'
+  - 'sdk.amazonaws.com'
   - '+.assets.as2.amazonaws.com'
   - '+.abcnewsfe.com'
   - '+.52netflix.com'
