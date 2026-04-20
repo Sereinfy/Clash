@@ -114,6 +114,7 @@ payload:
   - '+.am-cdn.pics'
   - '+.codeberg.page'
   - '+.instant.page'
+  - 'images.status.page'
   - '+.kinsta.page'
   - 'statics-prod.mirrordaily.news'
   - 'assets-next.matters.news'
