@@ -55,66 +55,86 @@ jobs:
 
       - name: Download rules
         run: |
-          download_and_process() {
-            local url="$1"
-            local dest="$2"
-            local tmpfile
-            tmpfile=$(mktemp)
-            
-            if curl -sSL -f "$url" -o "$tmpfile"; then
-              cat "$tmpfile" | sed "${@:3}" > "$dest"
-              echo "Downloaded $url -> $dest"
-              rm -f "$tmpfile"
-            else
-              echo "Failed: $url, keep old $dest"
-              rm -f "$tmpfile"
-            fi
-          }
-          
-          download_and_process "https://nsfw-small.oisd.nl" "rules/oisd_nsfw_small.yaml" \
-            -e '/^[![]/d' -e '/^\s*$/d' -e 's/||\(.*\)\^/  - '\''\+.\1'\''/' \
-            '1i payload:'
-          
-          {
-            tmpfile=$(mktemp)
-            if curl -sSL -f "https://ruleset.skk.moe/Clash/ip/china_ip.txt" -o "$tmpfile"; then
-              cat "$tmpfile" >> /tmp/china_ip.txt.tmp
-              rm -f "$tmpfile"
-            fi
-            tmpfile=$(mktemp)
-            if curl -sSL -f "https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt" -o "$tmpfile"; then
-              cat "$tmpfile" >> /tmp/china_ip.txt.tmp
-              rm -f "$tmpfile"
-            fi
-            if [ -f /tmp/china_ip.txt.tmp ]; then
-              grep -v -e '^#' -e '^$' /tmp/china_ip.txt.tmp > rules/china_ip.txt
-              rm -f /tmp/china_ip.txt.tmp
-              echo "Downloaded china_ip -> rules/china_ip.txt"
-            else
-              echo "Failed: china_ip, keep old rules/china_ip.txt"
-            fi
-          }
-          
-          download_and_process "https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt" "rules/apple_cn.yaml" \
-            -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" \
-            '1i payload:'
-          
-          download_and_process "https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list" "rules/pcdn.yaml" \
-            -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" \
-            '1i payload:'
-          
-          download_and_process "https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/pikpak.list" "rules/pikpak.yaml" \
-            -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" \
-            '1i payload:'
-          
-          download_and_process "https://raw.githubusercontent.com/Sereinfy/Adrules/main/rules/adblockmihomolite.yaml" "rules/adblock_lite.yaml" \
-            -e '/^\s*#/d' -e '/^\s*$/d'
-          
-          download_and_process "https://raw.githubusercontent.com/Loyalsoldier/geoip/release/clash/ipcidr/fastly.txt" "rules/fastly_ip.txt" \
-            -e '/^payload:/d' -e "s/^  - '\(.*\)'$/\1/"
-          
-          download_and_process "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt" "rules/telegram_ip.txt" \
-            -e '/^payload:/d' -e "s/^  - '\(.*\)'$/\1/"
+          tmpfile=$(mktemp)
+          if curl -sSL -f "https://nsfw-small.oisd.nl" -o "$tmpfile"; then
+            sed -e '/^[![]/d' -e '/^\s*$/d' -e 's/||\(.*\)\^/  - '\''+.\1'\''/g' "$tmpfile" | sed '1i payload:' > rules/oisd_nsfw_small.yaml
+            echo "Downloaded https://nsfw-small.oisd.nl -> rules/oisd_nsfw_small.yaml"
+            rm -f "$tmpfile"
+          else
+            echo "Failed: https://nsfw-small.oisd.nl, keep old rules/oisd_nsfw_small.yaml"
+            rm -f "$tmpfile"
+          fi
+
+          tmpfile1=$(mktemp)
+          tmpfile2=$(mktemp)
+          if curl -sSL -f "https://ruleset.skk.moe/Clash/ip/china_ip.txt" -o "$tmpfile1" && curl -sSL -f "https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt" -o "$tmpfile2"; then
+            { cat "$tmpfile1"; cat "$tmpfile2"; } | grep -v -e '^#' -e '^$' > rules/china_ip.txt
+            echo "Downloaded china_ip -> rules/china_ip.txt"
+            rm -f "$tmpfile1" "$tmpfile2"
+          else
+            echo "Failed: china_ip, keep old rules/china_ip.txt"
+            rm -f "$tmpfile1" "$tmpfile2"
+          fi
+
+          tmpfile=$(mktemp)
+          if curl -sSL -f "https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt" -o "$tmpfile"; then
+            sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" "$tmpfile" | sed "1i payload:" > rules/apple_cn.yaml
+            echo "Downloaded apple_cn -> rules/apple_cn.yaml"
+            rm -f "$tmpfile"
+          else
+            echo "Failed: https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt, keep old rules/apple_cn.yaml"
+            rm -f "$tmpfile"
+          fi
+
+          tmpfile=$(mktemp)
+          if curl -sSL -f "https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list" -o "$tmpfile"; then
+            sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" "$tmpfile" | sed "1i payload:" > rules/pcdn.yaml
+            echo "Downloaded pcdn -> rules/pcdn.yaml"
+            rm -f "$tmpfile"
+          else
+            echo "Failed: https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list, keep old rules/pcdn.yaml"
+            rm -f "$tmpfile"
+          fi
+
+          tmpfile=$(mktemp)
+          if curl -sSL -f "https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/pikpak.list" -o "$tmpfile"; then
+            sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" "$tmpfile" | sed "1i payload:" > rules/pikpak.yaml
+            echo "Downloaded pikpak -> rules/pikpak.yaml"
+            rm -f "$tmpfile"
+          else
+            echo "Failed: https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/pikpak.list, keep old rules/pikpak.yaml"
+            rm -f "$tmpfile"
+          fi
+
+          tmpfile=$(mktemp)
+          if curl -sSL -f "https://raw.githubusercontent.com/Sereinfy/Adrules/main/rules/adblockmihomolite.yaml" -o "$tmpfile"; then
+            sed -e '/^\s*#/d' -e '/^\s*$/d' "$tmpfile" > rules/adblock_lite.yaml
+            echo "Downloaded adblock_lite -> rules/adblock_lite.yaml"
+            rm -f "$tmpfile"
+          else
+            echo "Failed: https://raw.githubusercontent.com/Sereinfy/Adrules/main/rules/adblockmihomolite.yaml, keep old rules/adblock_lite.yaml"
+            rm -f "$tmpfile"
+          fi
+
+          tmpfile=$(mktemp)
+          if curl -sSL -f "https://raw.githubusercontent.com/Loyalsoldier/geoip/release/clash/ipcidr/fastly.txt" -o "$tmpfile"; then
+            sed -e '/^payload:/d' -e "s/^  - '\(.*\)'$/\1/" "$tmpfile" > rules/fastly_ip.txt
+            echo "Downloaded fastly_ip -> rules/fastly_ip.txt"
+            rm -f "$tmpfile"
+          else
+            echo "Failed: https://raw.githubusercontent.com/Loyalsoldier/geoip/release/clash/ipcidr/fastly.txt, keep old rules/fastly_ip.txt"
+            rm -f "$tmpfile"
+          fi
+
+          tmpfile=$(mktemp)
+          if curl -sSL -f "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt" -o "$tmpfile"; then
+            sed -e '/^payload:/d' -e "s/^  - '\(.*\)'$/\1/" "$tmpfile" > rules/telegram_ip.txt
+            echo "Downloaded telegram_ip -> rules/telegram_ip.txt"
+            rm -f "$tmpfile"
+          else
+            echo "Failed: https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt, keep old rules/telegram_ip.txt"
+            rm -f "$tmpfile"
+          fi
 
       - name: Download rules (remote URLs)
         run: |
@@ -213,7 +233,7 @@ jobs:
             echo "Downloading $url -> rules/$filename"
             tmpfile=$(mktemp)
             if curl -sSL -f "$url" -o "$tmpfile"; then
-              sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - '/; s/$/'" "$tmpfile" | sed "1i payload:" > "rules/$filename"
+              sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - '/; s/$/'/" "$tmpfile" | sed "1i payload:" > "rules/$filename"
               rm -f "$tmpfile"
               echo "Downloaded $url -> rules/$filename"
             else
