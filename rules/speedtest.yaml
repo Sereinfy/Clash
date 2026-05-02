@@ -1027,6 +1027,7 @@ payload:
   - 'speedtest-losangeles.ripplefiber.com'
   - 'speedtest-seattle.ripplefiber.com'
   - 'speedtest-chicago.ripplefiber.com'
+  - 'speedtest-atlanta.ripplefiber.com'
   - 'speedtest-stm.redeconecta.com'
   - 'speedtest-obd.redeconecta.com'
   - 'ooklaspeedtest-cdv.quebeccloud.com'
