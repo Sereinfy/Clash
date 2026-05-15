@@ -905,6 +905,7 @@ payload:
   - '+.apac.orbitor.dev'
   - '+.eu.orbitor.dev'
   - 'biomejs.dev'
+  - 'img.appledb.dev'
   - '+.angular.dev'
   - '+.vercel.dev'
   - 'shields.rbtlog.dev'
