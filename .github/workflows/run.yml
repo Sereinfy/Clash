@@ -67,6 +67,7 @@ jobs:
             "fake_ip_filter.yaml|https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list"
             "cdn_domainset.yaml|https://ruleset.skk.moe/Clash/domainset/cdn.txt"
             "speedtest.yaml|https://ruleset.skk.moe/Clash/domainset/speedtest.txt"
+            "download_domainset.yaml|https://ruleset.skk.moe/Clash/domainset/download.txt"
           )
           for item in "${payload_rules[@]}"; do
             name="${item%%|*}"
