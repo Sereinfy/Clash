@@ -22,6 +22,7 @@ jobs:
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png"
             "https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/anthropic.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png"
+            "https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/softlyx/PikPak.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Mickey.png"
             "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png"
@@ -71,7 +72,20 @@ jobs:
           for item in "${payload_rules[@]}"; do
             name="${item%%|*}"
             url="${item##*|}"
-            curl -fsSL "$url" -o tmp && sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - '/; s/$/'/" tmp | sed '1i payload:' > rules/$name || true
+            curl -fsSL "$url" -o tmp && sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - '/; s/$/'/" tmp | sed '1i payload:' > rules/$name || echo "keep rules/$name"
+          done
+
+          # --- Non-IP payload rules ---
+          non_ip_payload=(
+            "apple_cn.yaml|https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt"
+            "microsoft_cdn.yaml|https://ruleset.skk.moe/Clash/non_ip/microsoft_cdn.txt"
+            "pcdn.yaml|https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list"
+            "pikpak.yaml|https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/pikpak.list"
+          )
+          for item in "${non_ip_payload[@]}"; do
+            name="${item%%|*}"
+            url="${item##*|}"
+            curl -fsSL "$url" -o tmp && sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" tmp | sed '1i payload:' > rules/$name || echo "keep rules/$name"
           done
 
           # --- Raw rules ---
@@ -114,7 +128,7 @@ jobs:
             curl -fsSL "$url" -o rules/$name.tmp && mv rules/$name.tmp rules/$name || echo "keep $name"
           done
 
-          # --- Loyalsoldier rules ---
+          # --- Loyalsoldier ---
           loyalsoldier=(
             "apple_cdn.yaml|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt"
             "google_cn.yaml|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt"
@@ -127,7 +141,7 @@ jobs:
             curl -fsSL "$url" -o rules/$name.tmp && mv rules/$name.tmp rules/$name || echo "keep $name"
           done
 
-          # --- Blackmatrix7 rules ---
+          # --- Blackmatrix7 ---
           blackmatrix7=(
             "Lan.yaml|https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan_No_Resolve.yaml"
             "Google.yaml|https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google_No_Resolve.yaml"
