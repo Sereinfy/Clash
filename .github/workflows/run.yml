@@ -6,142 +6,141 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
 
-      ################################
+      ##############################
       # STEP 1: ICONS
-      ################################
+      ##############################
       - name: Download Icons
         run: |
           mkdir -p icons
-          for url in \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png \
-            https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/anthropic.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png \
-            https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/softlyx/PikPak.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Mickey.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/CN.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/IEPL.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png \
-            https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
-          do
+          urls=(
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png"
+            "https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/anthropic.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png"
+            "https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/softlyx/PikPak.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Mickey.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/CN.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/IEPL.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png"
+            "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png"
+          )
+          for url in "${urls[@]}"; do
             file="icons/$(basename "$url")"
             curl -fsSL "$url" -o "$file.tmp" && mv "$file.tmp" "$file" || echo "keep $file"
           done
 
-      ################################
+      ##############################
       # STEP 2: RULES
-      ################################
+      ##############################
       - name: Download Rules
         run: |
           mkdir -p rules
 
-          # OISD NSFW
-          curl -fsSL https://nsfw-small.oisd.nl \
-            | sed -e '/^[![]/d' -e '/^\s*$/d' -e "s/||\(.*\)\^/  - '+.\1'/" \
-            | sed '1i payload:' > rules/oisd_nsfw_small.yaml || true
+          # --- OISD NSFW ---
+          curl -fsSL https://nsfw-small.oisd.nl | sed -e '/^[![]/d' -e '/^\s*$/d' -e "s/||\(.*\)\^/  - '+.\1'/" | sed '1i payload:' > rules/oisd_nsfw_small.yaml || true
 
-          # China IP merge
+          # --- China IP merge ---
           curl -fsSL https://ruleset.skk.moe/Clash/ip/china_ip.txt -o a
           curl -fsSL https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt -o b
           cat a b | grep -v -e '^#' -e '^$' > rules/china_ip.txt || true
 
-          # payload style rules (sed:  - payload)
-          for item in \
-            apple_cn.yaml|https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt \
-            microsoft_cdn.yaml|https://ruleset.skk.moe/Clash/non_ip/microsoft_cdn.txt \
-            pcdn.yaml|https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list \
-            pikpak.yaml|https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/pikpak.list
-          do
-            url="${item#*|}"; name="${item%%|*}"
-            curl -fsSL "$url" -o tmp && sed -e '/^\s*#/d' -e '/^\s*$/d' -e 's/^/  - /' tmp | sed '1i payload:' > rules/$name || true
-          done
-
-          # quoted payload rules
-          for item in \
-            ai.yaml|https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/ai.list \
-            fake_ip_filter.yaml|https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list \
-            cdn_domainset.yaml|https://ruleset.skk.moe/Clash/domainset/cdn.txt \
-            speedtest.yaml|https://ruleset.skk.moe/Clash/domainset/speedtest.txt
-          do
-            url="${item#*|}"; name="${item%%|*}"
+          # --- Four payload rules individually ---
+          payload_rules=(
+            "ai.yaml|https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/ai.list"
+            "fake_ip_filter.yaml|https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list"
+            "cdn_domainset.yaml|https://ruleset.skk.moe/Clash/domainset/cdn.txt"
+            "speedtest.yaml|https://ruleset.skk.moe/Clash/domainset/speedtest.txt"
+          )
+          for item in "${payload_rules[@]}"; do
+            name="${item%%|*}"
+            url="${item##*|}"
             curl -fsSL "$url" -o tmp && sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - '/; s/$/'/" tmp | sed '1i payload:' > rules/$name || true
           done
 
-          # LM-Firefly classical
-          for url in \
-            https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Domestic.yaml \
-            https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Apple.yaml \
-            https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Microsoft.yaml \
-            https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/PROXY/Facebook.yaml \
-            https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/PROXY/Cloudflare.yaml \
-            https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Global-Services/YouTube.yaml \
-            https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Game.yaml \
-            https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/GlobalMedia.yaml
-          do
-            file="rules/$(basename "$url")"
-            curl -fsSL "$url" -o "$file.tmp" && mv "$file.tmp" "$file" || echo "keep $file"
+          # --- Raw rules ---
+          raw_rules=(
+            "cloudfront_ip.txt|https://raw.githubusercontent.com/Sereinfy/ipranges/main/amazon/cloudfront_ips.txt"
+            "akamai_ip.txt|https://raw.githubusercontent.com/Sereinfy/ipranges/main/akamai/ipv4_merged.txt"
+            "cloudflare_ip.txt|https://raw.githubusercontent.com/sbwml/luci-app-mosdns/v5/luci-app-mosdns/root/etc/mosdns/rule/cloudflare-cidr.txt"
+          )
+          for item in "${raw_rules[@]}"; do
+            name="${item%%|*}"
+            url="${item##*|}"
+            curl -fsSL "$url" -o rules/$name.tmp && mv rules/$name.tmp rules/$name || echo "keep $name"
           done
 
-          # Loyalsoldier rules
-          for item in \
-            apple_cdn.yaml|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt \
-            google_cn.yaml|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt \
-            gfw.yaml|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt \
-            applications.yaml|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt
-          do
-            url="${item#*|}"; name="${item%%|*}"
-            curl -fsSL "$url" -o tmp && sed -e '/^\s*#/d' -e '/^\s*$/d' -e 's/^/  - /' tmp | sed '1i payload:' > rules/$name || true
+          # --- Fastly + Telegramcidr individually with rename ---
+          fast_rules=(
+            "fastly_ip.txt|https://raw.githubusercontent.com/Loyalsoldier/geoip/release/clash/ipcidr/fastly.txt"
+            "telegram_ip.txt|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
+          )
+          for item in "${fast_rules[@]}"; do
+            name="${item%%|*}"
+            url="${item##*|}"
+            curl -fsSL "$url" | sed -e '/^payload:/d' -e "s/^  - '\(.*\)'$/\1/" > "rules/$name.tmp" && mv "rules/$name.tmp" "rules/$name" || echo "keep $name"
           done
 
-          # Blackmatrix7 rules
-          for item in \
-            Lan.yaml|https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan_No_Resolve.yaml \
-            Google.yaml|https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google_No_Resolve.yaml \
-            GitHub.yaml|https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub_No_Resolve.yaml \
-            Twitter.yaml|https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter_No_Resolve.yaml \
-            PT.yaml|https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker_No_Resolve.yaml \
-            Global_Domain.yaml|https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Domain.yaml
-          do
-            url="${item#*|}"; name="${item%%|*}"
-            curl -fsSL "$url" -o tmp && sed -e '/^\s*#/d' -e '/^\s*$/d' -e 's/^/  - /' tmp | sed '1i payload:' > rules/$name || true
+          # --- LM-Firefly classical rules ---
+          lm_firefly=(
+            "Domestic.yaml|https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Domestic.yaml"
+            "Apple.yaml|https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Apple.yaml"
+            "Microsoft.yaml|https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Microsoft.yaml"
+            "Facebook.yaml|https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/PROXY/Facebook.yaml"
+            "Cloudflare.yaml|https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/PROXY/Cloudflare.yaml"
+            "YouTube.yaml|https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Global-Services/YouTube.yaml"
+            "Game.yaml|https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/Game.yaml"
+            "GlobalMedia.yaml|https://raw.githubusercontent.com/LM-Firefly/Rules/master/Clash-RuleSet-Classical/GlobalMedia.yaml"
+          )
+          for item in "${lm_firefly[@]}"; do
+            name="${item%%|*}"
+            url="${item##*|}"
+            curl -fsSL "$url" -o rules/$name.tmp && mv rules/$name.tmp rules/$name || echo "keep $name"
           done
 
-          # Sereinfy / Other raw CIDR
-          for item in \
-            cloudfront_ip.txt|https://raw.githubusercontent.com/Sereinfy/ipranges/main/amazon/cloudfront_ips.txt \
-            akamai_ip.txt|https://raw.githubusercontent.com/Sereinfy/ipranges/main/akamai/ipv4_merged.txt \
-            cloudflare_ip.txt|https://raw.githubusercontent.com/sbwml/luci-app-mosdns/v5/luci-app-mosdns/root/etc/mosdns/rule/cloudflare-cidr.txt
-          do
-            url="${item#*|}"; name="rules/${item%%|*}"
-            curl -fsSL "$url" -o "$name.tmp" && mv "$name.tmp" "$name" || true
+          # --- Loyalsoldier rules ---
+          loyalsoldier=(
+            "apple_cdn.yaml|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt"
+            "google_cn.yaml|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt"
+            "gfw.yaml|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt"
+            "applications.yaml|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt"
+          )
+          for item in "${loyalsoldier[@]}"; do
+            name="${item%%|*}"
+            url="${item##*|}"
+            curl -fsSL "$url" -o rules/$name.tmp && mv rules/$name.tmp rules/$name || echo "keep $name"
           done
 
-          # Special sed fastly + telegramcidr
-          for url in \
-            https://raw.githubusercontent.com/Loyalsoldier/geoip/release/clash/ipcidr/fastly.txt \
-            https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt
-          do
-            file="rules/$(basename "$url")"
-            curl -fsSL "$url" | sed -e '/^payload:/d' -e "s/^  - '\(.*\)'$/\1/" > "$file.tmp" && mv "$file.tmp" "$file" || true
+          # --- Blackmatrix7 rules ---
+          blackmatrix7=(
+            "Lan.yaml|https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan_No_Resolve.yaml"
+            "Google.yaml|https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google_No_Resolve.yaml"
+            "GitHub.yaml|https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub_No_Resolve.yaml"
+            "Twitter.yaml|https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter_No_Resolve.yaml"
+            "PT.yaml|https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker_No_Resolve.yaml"
+            "Global_Domain.yaml|https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Domain.yaml"
+          )
+          for item in "${blackmatrix7[@]}"; do
+            name="${item%%|*}"
+            url="${item##*|}"
+            curl -fsSL "$url" -o rules/$name.tmp && mv rules/$name.tmp rules/$name || echo "keep $name"
           done
           
       - name: Download and unzip `mihomo` core
