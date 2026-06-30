@@ -63,7 +63,7 @@ jobs:
           curl -fsSL https://ruleset.skk.moe/Clash/ip/china_ip_ipv6.txt -o b
           cat a b | grep -v -e '^#' -e '^$' > rules/china_ip.txt || true
 
-          # --- Four payload rules individually ---
+          # --- text Domains ---
           payload_rules=(
             "ai.yaml|https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/ai.list"
             "fake_ip_filter.yaml|https://raw.githubusercontent.com/juewuy/ShellCrash/dev/public/fake_ip_filter.list"
@@ -77,10 +77,12 @@ jobs:
             curl -fsSL "$url" -o tmp && sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - '/; s/$/'/" tmp | sed '1i payload:' > rules/$name || echo "keep rules/$name"
           done
 
-          # --- Non-IP payload rules ---
+          # --- text classical ---
           non_ip_payload=(
             "apple_cn.yaml|https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt"
             "microsoft_cdn.yaml|https://ruleset.skk.moe/Clash/non_ip/microsoft_cdn.txt"
+            "stream_all.yaml|https://ruleset.skk.moe/Clash/non_ip/stream.txt"
+            "stream_ip_all.yaml|https://ruleset.skk.moe/Clash/ip/stream.txt"
             "pcdn.yaml|https://raw.githubusercontent.com/uselibrary/PCDN/main/pcdn.list"
             "pikpak.yaml|https://raw.githubusercontent.com/Sereinfy/Clash/main/rules/pikpak.list"
           )
@@ -90,7 +92,7 @@ jobs:
             curl -fsSL "$url" -o tmp && sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s/^/  - /" tmp | sed '1i payload:' > rules/$name || echo "keep rules/$name"
           done
 
-          # --- Raw rules ---
+          # --- text ipcidr ---
           raw_rules=(
             "cloudfront_ip.txt|https://raw.githubusercontent.com/Sereinfy/ipranges/main/amazon/cloudfront_ips.txt"
             "akamai_ip.txt|https://raw.githubusercontent.com/Sereinfy/ipranges/main/akamai/ipv4_merged.txt"
@@ -102,7 +104,7 @@ jobs:
             curl -fsSL "$url" -o rules/$name.tmp && mv rules/$name.tmp rules/$name || echo "keep $name"
           done
 
-          # --- Fastly + Telegramcidr individually with rename ---
+          # --- yaml ipcidr ---
           fast_rules=(
             "fastly_ip.txt|https://raw.githubusercontent.com/Loyalsoldier/geoip/release/clash/ipcidr/fastly.txt"
             "telegram_ip.txt|https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
